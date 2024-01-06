@@ -1,0 +1,14 @@
+  <!-- Product -->
+  <div class="card h-100">
+    {% if product.image %}
+        <a href="{{ product.image.url }}" target="_blank">
+            <img src="{{ product.image.url }}" alt="Imagen del producto" height="200">
+        </a>
+    {% endif %}
+
+    <div class="card-body">
+        <h5 class="card-title"> {{ product.title }} </h5>
+        <p class="card-text"> {{product.description}} </p>
+        <a href="{% url 'product:product' product.slug %}" class="btn btn-primary">Ver mas</a>
+    </div>
+</div>

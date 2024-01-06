@@ -1,0 +1,22 @@
+{%extends '../layouts/plantillaindex.html'%}
+{% load static %}
+{% block title %}contacto{% endblock %}
+
+{% block content %}
+<div class="col-3">
+    {% if product.image %}
+        <img src="{{ product.image.url }}" alt="Imagen del producto" width="200" height="200">
+    {% endif %}
+    <div clas="h1">{{ product.title }}</div>
+    <div class="h5 font-weigth-bold">
+        Precio: <span  class+"text-danger">${{product.price}}</span>
+    </div>
+    <div clas="">
+        {{ product.description }}
+    </div>
+    <div clas="">
+18      {% include 'carts/snippets/add.html' %}
+    </div>
+</div>
+
+{% endblock %}

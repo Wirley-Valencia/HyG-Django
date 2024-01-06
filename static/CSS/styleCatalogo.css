@@ -1,0 +1,106 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Golos Text', sans-serif;
+    /* font-family: 'Noto Sans', sans-serif; */
+    /* font-family: 'Quicksand', sans-serif; */
+    color: black;
+    font-size: medium;
+}
+#header{
+    background-color: rgb(255, 255, 255) ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 3%;
+}
+ body{ 
+    background-color: #d3e1eb; 
+    background-repeat: no-repeat;
+    background-position: 50px 50px;
+    background-size: 650px;
+    background-position: 150px 150px;  
+ }
+.logo {
+    cursor: pointer;
+    margin-right: 14%;
+}
+
+
+.imgLogo{
+    height: 100px;
+    width: auto;
+    transition: all 0.3s;
+}
+
+.imgLogo:hover{
+    transform:scale(1.2) ;
+}
+
+.nav-links{
+    list-style: none;
+   
+
+}
+
+.nav-links li{
+    display: inline;
+    padding: 0 20px;
+   
+}
+.menu-horizontal{
+
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+
+.menu-horizontal li a{
+    display: block;
+    padding: 15px 20px;
+    /* text-decoration: none; */
+    border-color: black;
+    box-sizing: 5px;
+
+}
+.container1{
+    padding: 30px 25px;
+    background-color: #d3e1eb; 
+}
+.container2{
+    padding: 30px 25px;
+    background-color: #d3e1eb;
+   
+}
+.linea1{
+    text-align: center;
+    /* font-family: "Homer Simpson UI"; */
+    font-size: 100px;
+    color: #00259f;
+   
+}
+.titulos{
+    padding-top: 20px;
+    font-size: 20px;
+    font-family: 'Anton', sans-serif;
+    align-items: center;
+    color: #00259f;
+}
+.footer{
+    height: 100px;
+    /* position: relative */
+    background-color: rgb(255, 255, 255);
+    margin-top: 1%;
+}
+
+#botonproducto {
+    background-color:#004AAD;  
+    border-color: #004AAD; 
+}
+
+#link{
+    color: black;
+}

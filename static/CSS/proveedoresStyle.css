@@ -1,0 +1,23 @@
+main{
+    height: 700px;
+    
+}
+
+#boton{
+    color: #004AAD;
+    border-radius: 10px;
+    height: 50px;
+    border-color: white;
+    background-color: #ffffff;
+    font-size: 30px;
+    margin: 4%;
+    width: 300px;
+}
+footer{
+    margin-top: 20px;
+    background-color: rgb(255, 255, 255);
+    height: 100px;
+}
+#inputButon{
+    margin-top: 100px;
+}

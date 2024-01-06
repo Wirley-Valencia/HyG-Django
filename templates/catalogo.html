@@ -1,0 +1,23 @@
+{%extends './layouts/plantillaindex.html'%}
+{% load static %}
+
+
+{% block title %}contacto{% endblock %}
+
+{% block content %}
+<div class="col">
+    <h4 class="text-center"> {{ message }} </h4>
+    {% comment %} <p>Number of products: {{ products|length }}</p> {% endcomment %}
+    {% include 'products/snippets/search.html' %}
+    
+    {% for product in products %}
+        <div class="col-3 mt-5">
+
+            {% include 'products/snippets/product.html' %}
+
+        </div>
+    {% endfor %}
+    
+</div>
+
+{% endblock %}

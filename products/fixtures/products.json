@@ -1,0 +1,26 @@
+[
+{
+    "model": "products.product",
+    "pk": 9,
+    "fields": {
+        "title": "playera para caballero",
+        "description": "playera para caballero",
+        "price": "10.00",
+        "slug": "playera-para-caballero",
+        "created_at": "2023-12-08T20:53:45.562Z",
+        "image": "products/bobC.png"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 10,
+    "fields": {
+        "title": "playera para dama",
+        "description": "playera para dama",
+        "price": "30.00",
+        "slug": "playera-para-dama",
+        "created_at": "2023-12-09T22:07:50.221Z",
+        "image": "products/degradadoDeFondo.png"
+    }
+}
+]

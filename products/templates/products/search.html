@@ -1,0 +1,17 @@
+{%extends '../layouts/plantillaindex.html'%}
+{% load static %}
+
+
+{% block title %}contacto{% endblock %}
+
+{% block content %}
+<div class="col">
+    {% include 'products/snippets/search.html' with query=query %}
+    <hr>
+    <p>Resultado para: {{ query }} ({{count}})</p>
+
+    {% include 'products/snippets/list.html'%}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{%extends './layouts/plantillaindex.html'%}
+{% load static %}
+{% block title %}Contacto{% endblock %}
+
+{% block content %}
+
+<div class="container" id="sobre">
+    <div class="container hero">
+        <div class="row" id="mercado">
+            <div class="col-md-6">
+                <h1 class="tituloSobreN">SOBRE NOSOTROS</h1>
+                <p class="parasobre">Somos una tienda de abarrotes familiar, donde nos enfocamos en ofrecer
+                    productos de alta calidad a precios accesibles. Encontrarás todo lo que necesitas para tu
+                    hogar, desde alimentos básicos como arroz, frijoles, harina y azúcar, hasta productos de
+                    limpieza, cuidado personal y productos para tu mascota.</p>
+                
+            </div>
+            <div class="col-md-6">
+                  
+                    <img class="img-fluid " id = image-sobre src="{% static 'Iconos/comida.png' %}">
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

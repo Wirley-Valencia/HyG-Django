@@ -1,0 +1,26 @@
+{%extends './layouts/plantillaindex.html'%}
+{% load static %}
+{% block title %}index{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="container hero">
+            <div class="row" id="mercado">
+                <div class="col-md-6">
+                    <h1 class="h1-mercado">MERCADO</h1>
+                    <p class="mercadop">AL ALCANCE <br> DE TUS MANOS</p>
+                    
+                </div>
+                <div class="col-md-6">
+                    
+                        <img class="img-fluid " id=image-principal src="{% static 'Iconos/img_index.png' %}">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

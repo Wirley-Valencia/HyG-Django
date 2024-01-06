@@ -1,0 +1,30 @@
+{%extends './layouts/plantillaindex.html'%}
+{% load static %}
+{% block title %}contacto{% endblock %}
+
+{% block content %}
+<main class="main-contactos row">  
+    <div class="container text-center">
+        <h1 class="h1-mercado">CONTACTO</h1>
+        
+    </div>
+<section class="col-lg-3 col-md-5 col-sm-10 text-center">
+    <img src="{% static 'Iconos/Ubicacion.png' %}" alt="Icono ubicación">
+    <p>Carrera 88h # 71-63 sur</p>
+    <p>Barrio Bosa San Antonio</p>
+    <p>Bogotá D.C</p>
+</section>
+<section class="col-lg-3 col-md-5 col-sm-10 text-center">
+    <img src="{% static 'Iconos/telefono.png' %}" alt="Icono teléfono">
+    <p>318 838 1712</p>
+    <p>317 741 4195</p>
+</section>
+<section class="col-lg-3 col-md-5 col-sm-10 text-center">
+    <img src="{% static 'Iconos/gmail.png' %}" alt="Icono correo">
+    <p>Harinasygranosvalencia@gmail.com</p>
+</section>
+
+</main>
+
+
+{% endblock %}
