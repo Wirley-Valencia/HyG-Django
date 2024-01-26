@@ -38,7 +38,7 @@ class Cart (models.Model):
         self.save()
 
     def products_related(self):
-        return self.cartproducts_set.select_related('product')
+        return self.cartproducts_set.select_related('Product')
 
 
 class CartProducts (models.Model):

@@ -21,10 +21,8 @@
                 </thead>
                 <tbody>
 
-                  select_related
-                  join
-                  
-                  {% for cp in cart.cartproducts_set.all %}
+
+                  {% for cp in cart.products_related %}
                   
                     {% with product=cp.Product %}
                       <tr>
