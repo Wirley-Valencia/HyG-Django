@@ -29,7 +29,7 @@ def add(request):
         cart=cart, product=product, quantity=quantity)
 
     return render(request, 'carts/add.html', {
-        'cart_product': cart_product,
+        'quantity': quantity,
         'product': product
     })
 
