@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'products',
     'categories',
     'carts',
+    'orders',
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"

@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -73,6 +73,9 @@ def login_view(request):
         if user:
             login(request, user)
             messages.success(request, 'Bienvenido {}'.format(user.username))
+
+            if request.GET.get('next'):
+                return HttpResponseRedirect(request.GET['next'])
 
             # Verificar el grupo y redirigir según el grupo
             if user.groups.filter(name='Administradores').exists():

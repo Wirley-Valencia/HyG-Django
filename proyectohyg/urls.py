@@ -26,6 +26,7 @@ from django.urls import include
 
 
 urlpatterns = [
+    path('orden/', include('orders.urls')),
     path('carrito/', include('carts.urls')),
     path('productos/', include('products.urls')),
     path('catalogo/', ProductListView.as_view(), name='catalogo'),

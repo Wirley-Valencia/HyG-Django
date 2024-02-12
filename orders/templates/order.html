@@ -1,0 +1,24 @@
+{%extends './layouts/plantillaindex.html'%}
+{% comment %} {% load product_extras %}
+{% load static %} {% endcomment %}
+
+{% block title %}Carrito de compras{% endblock %}
+
+{% block content %}
+
+    <div class="col-8">
+        <div class="h3">
+            Revisa tu pedido
+        </div>
+        <div class="card">
+            <div class="card-body">
+                {% for product in cart.products.all %}
+                    {% include 'orders/snippets/product.html' %}
+                {% endfor %}
+            </div>
+        <div>
+        </div>
+    <div class="col">
+        {% include "orders/snippets/resume.html" %}
+    </div>
+{% endblock %}
