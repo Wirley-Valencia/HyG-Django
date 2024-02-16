@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_interface',
+    'jazzmin',
     'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,19 +55,60 @@ INSTALLED_APPS = [
 X_FRAME_OPTIONS = "SAMEORIGIN"
 SILENCED_SYSTEM_CHECKS = ["security.W019"]
 
-# JAZZMIN_SETTINGS = {
-#     'welcome_sign': 'Bienvenido Admin',
-#     'login_logo':'Iconos\Logo_hyg (1).png',
-#     'site_icon': 'Iconos\hyg-logo-ivcon.png',
-#     "site_title": "HYG",
-#     "site_header": "HYG",
-#     "site_brand": "HYG",
-#     "site_logo": "Iconos\hyg-logo-ivcon.png",
-# }
+JAZZMIN_SETTINGS = {
+    "site_brand": "H&G Valencia",                                                                                                                                
+    'welcome_sign': 'Bienvenido Admin',
+    'login_logo':'Iconos\H_G Valencia.png',
+    'site_icon': 'Iconos\icono H_G.png',
+    "site_title": "HYG",
+    "site_header": "HYG",
+    "site_logo": "Iconos\icono H_G.png",
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.Group": "fas fa-users",
+        "auth.user": "fas fa-user",
+        'carts.CARTS': 'fas fa-shopping-cart',
+        'categories.CATEGORYS': 'fas fa-list-alt',
+        'products.PRODUCTS': 'fas fa-box',
+        'sales.CLIENTES': 'fas fa-users',
+    }
+}
 
-# JAZZMIN_UI_TWEAKS = {
-#     'theme': 'flatly',
-# }
+
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": True,
+    "brand_colour": "navbar-info",
+    "accent": "accent-primary",
+    "navbar": "navbar-info navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-light-info",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": True,
+    "theme": "sandstone",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-custom-primary",
+        "secondary": "btn-custom-secondary",
+        "info": "btn-custom-info",
+        "warning": "btn-custom-warning",
+        "danger": "btn-custom-danger",
+        "success": "btn-custom-success"
+    },
+    "actions_sticky_top": False
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

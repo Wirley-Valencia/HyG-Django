@@ -19,6 +19,17 @@ MYSQL = {
         'PORT': '3306'
     }
 }
+# MYSQL = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'hygdb',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306'
+#     }
+# }
+
 
 # POSTGRESQL = {
 #     'default': {

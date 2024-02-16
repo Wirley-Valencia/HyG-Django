@@ -4,8 +4,10 @@ from .models import Product
 
 
 class ProductAdmin(admin.ModelAdmin):
-    fields = ('title', 'description', 'price', 'image', 'cantidad_disponible')
-    list_display = ('__str__', 'slug', 'created_at', 'cantidad_disponible')
+    fields = ('title', 'description', 'amount', 'price',
+              'image', 'cantidad_disponible', 'expiration_date')
+    list_display = ('__str__', 'slug', 'amount', 'created_at',
+                    'cantidad_disponible', 'expiration_date')
 
 
 admin.site.register(Product, ProductAdmin)

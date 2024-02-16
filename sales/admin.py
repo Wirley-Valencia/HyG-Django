@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Products,Venta, DetalleVenta,Cliente
+from .models import Product,Venta, DetalleVenta,Cliente
 
 class DetalleVentaInline(admin.TabularInline):
     model = DetalleVenta
