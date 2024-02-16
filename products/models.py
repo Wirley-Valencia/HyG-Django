@@ -11,10 +11,15 @@ class Product(models.Model):
     slug = models.SlugField(null=False, blank=False, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='products/', null=False, blank=False)
+    cantidad_disponible = models.IntegerField(default=0)
 
     # def save(self, *args, **kwargs):
     #     self.slug = slugify(self.title)
     #     super(Product, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "Producto"
+        verbose_name_plural = "Productos"
 
     def __str__(self):
         return self.title

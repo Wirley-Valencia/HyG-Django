@@ -29,6 +29,10 @@ class Order(models.Model):
     total = models.DecimalField(default=0, max_digits=8, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = "Orden"
+        verbose_name_plural = "Ordenes"
+
     def __str__(self):
         return self.order_id
 

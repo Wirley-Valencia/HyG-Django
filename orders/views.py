@@ -2,6 +2,7 @@ from django.shortcuts import render
 from carts.utils import get_or_create_cart
 from .models import Order
 from .utils import get_or_create_order
+from .utils import breadcrumb
 
 # Create your views here.
 from django.contrib.auth.decorators import login_required
@@ -14,5 +15,6 @@ def order(request):
 
     return render(request, 'order.html', {
         'cart': cart,
-        'order': order
+        'order': order,
+        'breadcrumb': breadcrumb()
     })

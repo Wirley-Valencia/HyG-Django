@@ -28,6 +28,9 @@ def add(request):
     cart_product = CartProducts.objects.create_or_update_quantity(
         cart=cart, product=product, quantity=quantity)
 
+    product.cantidad_disponible -= quantity
+    product.save()
+
     return render(request, 'carts/add.html', {
         'quantity': quantity,
         'product': product

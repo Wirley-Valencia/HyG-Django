@@ -48,7 +48,6 @@
                 </ul>
             </div>
         </nav>
-
         <div>
             <ul></ul>
         <div/>
@@ -56,6 +55,8 @@
             <a class="btn btn-outline-primary" href="{% url 'login' %}">INICIO <br> DE SESIÓN</a>
         </div>
     </header>
+    {% block breadcrumb %}
+    {% endblock %}  
 
         <main class="container-fluid">
             {% block content %}{% endblock %}

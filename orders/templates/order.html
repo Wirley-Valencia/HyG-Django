@@ -1,6 +1,8 @@
 {%extends './layouts/plantillaindex.html'%}
-{% comment %} {% load product_extras %}
-{% load static %} {% endcomment %}
+{% block breadcrumb %}
+    {% include "orders/snippets/breadcrumb.html" %}
+{% endblock %}  
+
 
 {% block title %}Carrito de compras{% endblock %}
 
