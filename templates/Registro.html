@@ -1,51 +1,175 @@
 {% load static %}
-
 <!doctype html>
 <html lang="en">
 
-<head>
-  <title>Registro</title>
+<head id="header">
+  <title>login</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS v5.2.1 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link href="/static/css/styleRegistro.css" rel="stylesheet">
+    <link href="{% static 'css/styleLogin.css' %}" rel="stylesheet">
+    <style>
+        .custom-height {
+
+            padding-top: 30px;
+            height: 1000px;
+        }
+        .titulo-inicio{
+            background-color:#1f57b5;
+        }
+        .iniciar-sesion-h1{
+            color: #ffffff;
+        }
+
+    </style>
 </head>
 
-<body class="body">
-<header id="header">
-        <div class="logo">
-            <img src="/static/Iconos/image-removebg-preview.png" class="img-fluid" alt="Logo empresa">
-           
-        </div>
-        <nav>
-            <h1>Formulario de registro de Cliente</h1>
-        </nav>
-</header>
-<main>
-  <form method="post" action="{% url 'registro' %}">
+<body>
+    <header id="header">
+            <div class="logo">
+                <img id="imglogo" src="{% static 'Iconos/image-removebg-preview.png' %}" class="img-fluid" alt="Logo empresa">
+
+            </div>
+
+    </header>
+
+
+    <main class="login-form">
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+
+                        <div class="card-header text-center titulo-inicio">
+                            <h5 class="iniciar-sesion-h1">CREAR CUENTA</h5>
+                        </div>
+
+                        <div class="card-body custom-height ">
+
+<!-- registration_form.html -->
+
+<style>
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ajusta la altura según tu diseño */
+  }
+
+  .registration-form {
+    width: 400px; /* Ancho del formulario */
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+</style>
+
+<div class="container">
+  <form method="post" class="registration-form">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Registrar</button>
+    <div class="form-group">
+      <label for="id_username">Nombre de usuario:</label>
+      {{ form.username }}
+    </div>
+    <div class="form-group">
+      <label for="id_email">Correo electrónico:</label>
+      {{ form.email }}
+    </div>
+    <div class="form-group">
+      <label for="id_password1">Contraseña:</label>
+      {{ form.password1 }}
+    </div>
+    <div class="form-group">
+      <label for="id_password2">Confirmar contraseña:</label>
+      {{ form.password2 }}
+    </div>
+    <div class="form-group">
+      <label for="id_first_name">Nombre:</label>
+      {{ form.first_name }}
+    </div>
+    <div class="form-group">
+      <label for="id_last_name">Apellido:</label>
+      {{ form.last_name }}
+    </div>
+    <div class="form-group">
+      <label for="id_address">Dirección:</label>
+      {{ form.address }}
+    </div>
+    <div class="form-group">
+      <label for="id_location">Ubicación:</label>
+      {{ form.location }}
+    </div>
+    <div class="form-group">
+      <label for="id_telephone">Teléfono:</label>
+      {{ form.telephone }}
+    </div>
+    <div class="form-group">
+      <label for="id_cell_phone">Celular:</label>
+      {{ form.cell_phone }}
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Registrar</button>
+    </div>
   </form>
+
+  {% if form.errors %}
+    <div class="error-message">
+      <p>Por favor, corrija los siguientes errores:</p>
+      <ul>
+      {% for field in form %}
+        {% for error in field.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
 </main>
 
-<script src="validacionRegistros.js"></script>
-<!-- Boostrap -  -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<footer class="footer">
 
-<footer>
-  <!-- place footer here -->
 </footer>
-  <!-- Bootstrap JavaScript Libraries -->
-  <script src="{% static 'js/validacionRegistros.js' %}"></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<!-- Bootstrap JavaScript Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+</script>
+<script src="{% static 'js/validacionInicio.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+</script>
 </body>
 
 </html>

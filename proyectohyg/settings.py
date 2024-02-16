@@ -58,7 +58,7 @@ SILENCED_SYSTEM_CHECKS = ["security.W019"]
 JAZZMIN_SETTINGS = {
     "site_brand": "H&G Valencia",                                                                                                                                
     'welcome_sign': 'Bienvenido Admin',
-    'login_logo':'Iconos\H_G Valencia.png',
+    'login_logo':'Iconos\H_G_Valencia.png',
     'site_icon': 'Iconos\icono H_G.png',
     "site_title": "HYG",
     "site_header": "HYG",
@@ -206,5 +206,5 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "edersonramirezlopez@gmail.com"
-EMAIL_HOST_PASSWORD = "awadeuwuconewe2021"
+EMAIL_HOST_USER = "vanessavalencia1052@gmail.com"
+EMAIL_HOST_PASSWORD = "rifw pfrp ylsk tanj"
