@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.html import format_html
 from products.models import Product
+from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 # Create your models here.
 
@@ -21,14 +23,28 @@ class Suppliers(models.Model):
 
 
 class Compra(models.Model):
-    description = models.CharField(max_length=255, null=True)
-    #    amount = cantidad, suppliers = proveedores
-    amountc = models.IntegerField()
-    datec = models.DateField(null=True, blank=True)
-    pricec = models.IntegerField()
-    supplier = models.ForeignKey(
-        Suppliers, on_delete=models.SET_NULL, null=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    description = models.CharField(max_length=255, verbose_name='Descripción', null=True)
+    amountc = models.IntegerField(verbose_name='Cantidad')
+    datec = models.DateField(verbose_name='Fecha', null=True, blank=True)
+    pricec = models.IntegerField(verbose_name='Precio')
+    supplier = models.ForeignKey(Suppliers, on_delete=models.SET_NULL, null=True, verbose_name='Proveedor')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Producto')
+
+    def clean(self):
+        # Validación para asegurarse de que 'amountc' no sea negativo
+        if self.amountc < 0:
+            raise ValidationError({'amountc': 'La cantidad no puede ser negativa.'})
+
+        # Validación para asegurarse de que 'pricec' no sea negativo
+        if self.pricec < 0:
+            raise ValidationError({'pricec': 'El precio no puede ser negativo.'})
+
+        # Validación para asegurarse de que 'datec' sea hasta un mes anterior a la fecha actual
+        if self.datec:
+            one_month_ago = timezone.now().date() - timezone.timedelta(days=30)
+            if self.datec > timezone.now().date() or self.datec < one_month_ago:
+                raise ValidationError({'datec': 'La fecha debe ser hasta un mes anterior a la fecha actual.'})
+
 
     class Meta:
         verbose_name = 'compra'
@@ -38,6 +54,8 @@ class Compra(models.Model):
 
     def __str__(self):
         return self.description
+    
+    
 
 
 class Gastos(models.Model):

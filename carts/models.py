@@ -7,6 +7,8 @@ from products.models import Product
 from django.db.models.signals import pre_save,  post_save
 from django.db.models.signals import m2m_changed
 import decimal
+from django.core.exceptions import ValidationError
+
 
 
 class Cart (models.Model):
@@ -51,6 +53,15 @@ class Cart (models.Model):
     @property
     def order(self):
         return self.order_set.first()
+    
+    def clean(self):
+        # Validación para asegurarse de que 'subtotal' no sea negativo
+        if self.subtotal < 0:
+            raise ValidationError({'subtotal': 'El subtotal no puede ser negativo.'})
+
+        # Validación para asegurarse de que 'total' no sea negativo
+        if self.total < 0:
+            raise ValidationError({'total': 'El total no puede ser negativo.'})
 
 
 class CartProductsManager (models.Manager):
