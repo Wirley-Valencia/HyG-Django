@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 # Create your models here.
 
 
@@ -14,6 +15,14 @@ class CustomUser(AbstractUser):
         max_length=50, null=True, blank=True, verbose_name='Teléfono')
     cell_phone = models.CharField(
         max_length=50, null=True, blank=True, verbose_name='Celular')
+
+    def clean(self):
+        if self.telephone and len(self.telephone) < 10:
+            raise ValidationError(
+                'El teléfono debe tener menos de 10 dígitos.')
+
+        if self.cell_phone and len(self.cell_phone) != 10:
+            raise ValidationError('El celular debe tener 10 dígitos.')
 
     class Meta:
         verbose_name = 'Usuario personalizado'

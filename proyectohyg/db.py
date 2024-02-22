@@ -12,9 +12,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MYSQL = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hygdbm',
+        'NAME': 'hygdb',
         'USER': 'root',
-        'PASSWORD': '1234',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306'
     }
