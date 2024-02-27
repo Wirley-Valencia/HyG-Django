@@ -1,6 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
 
+.titulo-inicio{
+    background-color:#1f57b5;
+}
+
 body{
 
     font-size: .9rem;
@@ -10,6 +14,16 @@ body{
     text-align: left;
     background-color: #D3E1EB;
 }
+.custom-height {
+
+    padding-top: 30px;
+    height: 700px;
+}
+
+.iniciar-sesion-h1{
+    color: #ffffff;
+}
+
 
 .navbar-laravel
 {

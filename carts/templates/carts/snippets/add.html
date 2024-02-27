@@ -21,6 +21,14 @@
     });
 
     remove.addEventListener('click', function () {
-        quantity.value = parseInt(quantity.value) - 1;
+        // Verificar que la cantidad no sea menor o igual a 0 antes de restar
+        if (parseInt(quantity.value) > 0) {
+            quantity.value = parseInt(quantity.value) - 1;
+        } else {
+            // Si la cantidad es 0, no permitir restar más
+            alert("La cantidad no puede ser negativa");
+        }
     });
+</script>  
 </script>
+

@@ -1,26 +1,91 @@
 {%extends './layouts/plantillaindex.html'%}
 {% load static %}
-{% block title %}index{% endblock %}
+
+
+
+{% block title %}inicio{% endblock %}
 
 {% block content %}
+    <!-- Close Header -->
 
-    <div class="container">
-        <div class="container hero">
-            <div class="row" id="mercado">
-                <div class="col-md-6">
-                    <h1 class="h1-mercado">MERCADO</h1>
-                    <p class="mercadop">AL ALCANCE <br> DE TUS MANOS</p>
-                    
-                </div>
-                <div class="col-md-6">
-                    
-                        <img class="img-fluid " id=image-principal src="{% static 'Iconos/img_index.png' %}">
-                   
-                </div>
+    <!-- Modal -->
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="w-100 pt-1 mb-5 text-right">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                    <button type="submit" class="input-group-text bg-success text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
+    <!-- Start Banner Hero -->
+    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="{% static 'iconos/IMG_20240217_173358.jpg' %}" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left align-self-center">
+                                <h1 class="h1 text-success"> ¡BIENVENIDOS! </h1>
+                                <h3 class="h2">Descubre un mundo de comodidad con nuestro supermercado: productos frescos, variedad incomparable y precios irresistibles, ¡todo al alcance de tus manos!</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="{% static 'iconos/IMG_20240217_173451.jpg' %}" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">En Harinas y Granos Valencia</h1>
+                                <h3 class="h2">la frescura es nuestra prioridad. Cada día, seleccionamos cuidadosamente los productos más frescos para asegurarnos de que disfrutes de la mejor calidad en tu mesa.</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="{% static 'iconos/IMG_20240217_173401.jpg' %}" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">Nuestro equipo está aquí para ayudarte.</h1>
+                                <h3 class="h2"> Con un servicio al cliente excepcional, en Harinas y Granos Valencia nos enorgullece brindar atención personalizada para garantizar una experiencia de compra inigualable. </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+    <!-- End Banner Hero -->
 
-
-{% endblock %}
+    {% endblock %}
