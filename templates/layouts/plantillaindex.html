@@ -45,9 +45,6 @@ https://templatemo.com/tm-559-zay-shop
                             <a class="nav-link" href="{% url 'nosotros' %}">Nosotros</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'catalogo' %}">Catalogo</a>
                         </li>
                         <li class="nav-item  {% if request.path == cart%}active{% endif %}">
@@ -55,10 +52,19 @@ https://templatemo.com/tm-559-zay-shop
                               Carrito <span class="fas fa-shopping-cart"></span>
                             </a>
                         </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Mis pedidos</a>
+                            </li>
+
+                        {% endif %}
                     </ul>
                 </div>
-              
-                    <a class="btn btn-outline-primary" href="{% url 'login' %}">INICIO <br> DE SESIÓN</a>
+                {% if user.is_authenticated %}
+                    <a class="rounded-login-button" href="{% url 'logout' %}">Cerrar sesion</a>
+                {% else %}
+                    <a class="rounded-login-button" href="{% url 'login' %}">Inicio de sesión</a>
+                {% endif %}
             
             </div>
         </div>

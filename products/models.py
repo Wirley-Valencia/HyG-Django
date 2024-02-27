@@ -23,8 +23,8 @@ class Product(models.Model):
             raise ValidationError(
                 'La fecha de expiración no puede ser anterior a la fecha actual.')
 
-        if self.price < 0:
-            raise ValidationError('El precio no puede ser negativo.')
+        if self.price < 100:
+            raise ValidationError('El precio debe tener por lo menos 3 digitos.')
 
         if self.cantidad_disponible is not None and self.cantidad_disponible < 0:
             raise ValidationError('La cantidad no puede ser negativa.')

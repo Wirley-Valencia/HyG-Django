@@ -34,7 +34,7 @@ Table of contents
 /* styles.css */
 
 
-/* styles.css */
+
 
 .button {
   display: inline-block;
@@ -50,15 +50,17 @@ Table of contents
 .rounded-login-button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #1292fa; /* Rojo */
-  color: #fff; /* Texto blanco */
-  border: none;
-  border-radius: 25px; /* Bordes redondeados */
+  background-color: #96cff5;
+  border-color: #0072eb;
+  border-radius: 25px;
   cursor: pointer;
+  text-decoration: none;
+  
 }
 
 .rounded-login-button:hover {
-  background-color: #1292fa; /* Color de fondo al pasar el ratón sobre el botón */
+  background-color: #45a6f5;
+  text-decoration: none;  /* Color de fondo al pasar el ratón sobre el botón */
 }
 
 .btn-wrap {
