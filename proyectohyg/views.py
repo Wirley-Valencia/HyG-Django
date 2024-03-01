@@ -86,7 +86,7 @@ def login_view(request):
                 return redirect('dashboard_administrador')
             elif user.groups.filter(name='Clientes').exists():
                 # Redirección para clientes
-                return redirect('dashboard_cliente')
+                return redirect('inicio')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos')
 
