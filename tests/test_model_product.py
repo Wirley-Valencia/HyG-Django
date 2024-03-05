@@ -23,7 +23,7 @@ class ProductTestCase(TestCase):
             slug='test-product',
             image='products/test.jpg'
         )
-
+ 
     def test_product_creation(self):
         product = Product.objects.get(id=self.product.id)
         self.assertEqual(product.title, 'Test Product')

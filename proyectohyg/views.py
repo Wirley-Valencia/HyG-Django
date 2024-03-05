@@ -98,8 +98,7 @@ def registro(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            # Cambia 'home' con la URL a la que quieras redirigir después del registro
+            # login(request, user)
             return redirect('inicio')
     else:
         form = CustomUserCreationForm()
