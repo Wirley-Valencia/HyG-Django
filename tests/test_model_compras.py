@@ -27,6 +27,7 @@ def test_create_compra():
 
     assert Compra.objects.count() == 1
 
+
 @pytest.mark.django_db
 def test_update_compra():
     supplier = Suppliers.objects.create(name='Proveedor de prueba')
@@ -78,3 +79,4 @@ def test_delete_compra():
 
     compra.delete()
     assert Compra.objects.count() == 0
+

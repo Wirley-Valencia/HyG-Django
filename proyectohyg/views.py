@@ -109,3 +109,24 @@ def logout_view(request):
     logout(request)
     messages.success(request, 'Sesión finalizada')
     return redirect('login')
+
+def rContraseña(request):
+    return render(request, 'plantillalogin.html', {
+        # context
+    })
+
+
+def AnuncioR(request):
+    return render(request, 'anuncioR.html', {
+        # context
+    })
+
+def nuevaC(request):
+    return render(request, 'nuevaC.html', {
+        # context
+    })
+
+def contraseñaC(request):
+    return render(request, 'contraseñaC.html', {
+        # context
+    })
