@@ -33,7 +33,7 @@ class Cliente(models.Model):
 class Venta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     fecha = models.DateField()
-    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0,null=True )
 
     def calcular_total(self):
         detalles = DetalleVenta.objects.filter(venta=self)
@@ -52,9 +52,9 @@ class Venta(models.Model):
             raise ValidationError(
                 'La fecha de la venta no puede ser en el futuro.')
 
-        if self.total <= 0:
-            raise ValidationError(
-                'El total de la venta debe ser mayor que cero.')
+        # if self.total <= 0:
+        #     raise ValidationError(
+        #         'El total de la venta debe ser mayor que cero.')
 
 
 class DetalleVenta(models.Model):

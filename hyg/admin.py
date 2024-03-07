@@ -45,8 +45,6 @@ class CompraAdmin(ImportExportModelAdmin):
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="reporte_productos.pdf"'
 
-        # Resto del código para generar el PDF de Products
-        # ...
 
         return response
 
@@ -54,10 +52,10 @@ class CompraAdmin(ImportExportModelAdmin):
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="reporte_compras.pdf"'
 
-        # Create the PDF object with landscape orientation
+        
         p = canvas.Canvas(response, pagesize=landscape(letter))
 
-        # Coloca el logo una línea arriba del título
+ 
         logo_path = 'static/Iconos/H_G_Valencia.png'
         p.drawImage(logo_path, 50, 550, width=100, height=50)
         
@@ -65,12 +63,12 @@ class CompraAdmin(ImportExportModelAdmin):
         p.setFont("Helvetica", 8)
         p.drawRightString(770, 590, f"Generado el: {date_string}")
 
-        # PDF Title
+       
         p.setFont("Helvetica", 18)
         p.setFillColor(colors.darkblue) 
-        p.drawString(100, 530, "Reporte de compras")  # Ajusta la coordenada Y aquí
+        p.drawString(100, 530, "Reporte de compras")  
 
-        # Headers
+        
         p.setFont("Helvetica", 10)
         p.setFillColor(colors.darkblue) 
         p.drawString(70, 500, "ID")
@@ -82,12 +80,12 @@ class CompraAdmin(ImportExportModelAdmin):
         p.drawString(680, 500, "Producto")
         p.setFillColor(colors.black)
 
-        # Content
+       
         y_position = 470
-        rows_per_page = 20  # Ajusta este valor según tu límite de filas por hoja
+        rows_per_page = 20  
         for i, compra in enumerate(queryset_compra):
             if i % rows_per_page == 0 and i != 0:
-                # Si alcanza el límite de filas por hoja, crea una nueva página
+                
                 p.showPage()
                 
                 logo_path = 'static/Iconos/iconopdf.png'
@@ -97,12 +95,11 @@ class CompraAdmin(ImportExportModelAdmin):
                 p.setFont("Helvetica", 8)
                 p.drawRightString(770, 590, f"Generado el: {date_string}")
 
-                # PDF Title
                 p.setFont("Helvetica", 18)
                 p.setFillColor(colors.darkblue) 
-                p.drawString(100, 530, "Reporte de compras")  # Ajusta la coordenada Y aquí
+                p.drawString(100, 530, "Reporte de compras") 
 
-                # Headers
+                
                 p.setFont("Helvetica", 10)
                 p.setFillColor(colors.darkblue) 
                 p.drawString(70, 500, "ID")
@@ -113,7 +110,7 @@ class CompraAdmin(ImportExportModelAdmin):
                 p.drawString(580, 500, "Proveedor")
                 p.drawString(680, 500, "Producto")
                 p.setFillColor(colors.black)
-                y_position = 470  # Reinicia la posición Y para la nueva página
+                y_position = 470  
 
             p.drawString(70, y_position, str(compra.id))
             p.drawString(120, y_position, compra.description)
@@ -125,11 +122,7 @@ class CompraAdmin(ImportExportModelAdmin):
             y_position -= 20
             
             
-        
-        # Resto del código para completar el PDF de Compra
-        # ...
 
-        # Close the PDF object cleanly, and we're done.
         p.showPage()
         p.save()
 
@@ -151,7 +144,7 @@ class GastosAdmin(ImportExportModelAdmin):
             fields = ('id', 'description', 'date', 'price',)
             
     def generate_pdf(self, request, queryset):
-        # Aquí llamamos a la función que genera el PDF
+        
         pdf_response = self.generate_pdf_report(queryset)
         return pdf_response
 
@@ -161,22 +154,21 @@ class GastosAdmin(ImportExportModelAdmin):
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="reporte_gastos.pdf"'
 
-        # Create the PDF object, using the response object as its "file."
         p = canvas.Canvas(response, pagesize=letter)
 
-        logo_path = 'static/Iconos/iconopdf.png'
+        logo_path = 'static/Iconos/H_G_Valencia.png'
         p.drawImage(logo_path, 50, 730, width=100, height=50)
         
         date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         p.setFont("Helvetica", 8)
         p.drawRightString(600, 730, f"Generado el: {date_string}")
 
-        # PDF Title
+      
         p.setFont("Helvetica", 16) 
         p.setFillColor(colors.darkblue) 
         p.drawString(100, 700, "Reporte de gastos")
 
-        # Headers
+       
         p.setFont("Helvetica", 10)
         p.setFillColor(colors.darkblue) 
         p.drawString(70, 675, "ID")
@@ -185,12 +177,12 @@ class GastosAdmin(ImportExportModelAdmin):
         p.drawString(530, 675, "Precio")
         p.setFillColor(colors.black)
 
-        # Content
+        
         y_position = 645
-        rows_per_page = 20  # Ajusta este valor según tu límite de filas por hoja
+        rows_per_page = 20  
         for i, gasto in enumerate(queryset):
             if i % rows_per_page == 0 and i != 0:
-                # Si alcanza el límite de filas por hoja, crea una nueva página
+                
                 p.showPage()
                 logo_path = 'static/Iconos/iconopdf.png'
                 p.drawImage(logo_path, 50, 730, width=100, height=50)
@@ -199,12 +191,10 @@ class GastosAdmin(ImportExportModelAdmin):
                 p.setFont("Helvetica", 8)
                 p.drawRightString(300, 730, f"Generado el: {date_string}")
 
-                # PDF Title
                 p.setFont("Helvetica", 16) 
                 p.setFillColor(colors.darkblue) 
                 p.drawString(150, 730, "Reporte de gastos")
 
-                # Resto del código para el encabezado de la nueva página
                 p.setFont("Helvetica", 16)
                 p.drawString(100, 800, "Reporte de gastos")
                 p.setFont("Helvetica", 10)
@@ -212,12 +202,8 @@ class GastosAdmin(ImportExportModelAdmin):
                 p.drawString(150, 780, "Descripción")
                 p.drawString(450, 780, "Fecha")
                 p.drawString(530, 780, "Precio")
-                y_position = 760  # Reinicia la posición Y para la nueva página
+                y_position = 760  
 
-            # Ajusta el ancho máximo del texto y divide automáticamente el texto en varias líneas
-            
-
-            # Dibuja cada línea por separado
             
             p.drawString(70, y_position, str(gasto.id))
             p.drawString(150, y_position, gasto.description)
@@ -225,7 +211,6 @@ class GastosAdmin(ImportExportModelAdmin):
             p.drawString(530, y_position, str(gasto.price))
             y_position -= 20
 
-        # Close the PDF object cleanly, and we're done.
         p.showPage()
         p.save()
 
@@ -250,7 +235,7 @@ class SuppliersAdmin(ImportExportModelAdmin):
             fields = ('id', 'name', 'email', 'phone',)
             
     def generate_pdf(self, request, queryset):
-        # Aquí llamamos a la función que genera el PDF
+        
         pdf_response = self.generate_pdf_report(queryset)
         return pdf_response
 
@@ -260,22 +245,20 @@ class SuppliersAdmin(ImportExportModelAdmin):
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="reporte_proveedores.pdf"'
 
-        # Create the PDF object, using the response object as its "file."
+        
         p = canvas.Canvas(response, pagesize=letter)
 
-        logo_path = 'static/Iconos/iconopdf.png'
+        logo_path = 'static/Iconos/H_G_Valencia.png'
         p.drawImage(logo_path, 50, 730, width=100, height=50)
 
         date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         p.setFont("Helvetica", 8)
         p.drawRightString(600, 730, f"Generado el: {date_string}")
 
-        # PDF Title
         p.setFont("Helvetica", 16)
         p.setFillColor(colors.darkblue)
         p.drawString(100, 700, "Reporte de proveedores")
 
-        # Headers
         p.setFont("Helvetica", 10)
         p.setFillColor(colors.darkblue)
         p.drawString(70, 675, "ID")
@@ -284,12 +267,11 @@ class SuppliersAdmin(ImportExportModelAdmin):
         p.drawString(480, 675, "Teléfono")
         p.setFillColor(colors.black)
 
-        # Content
         y_position = 645
-        rows_per_page = 20  # Ajusta este valor según tu límite de filas por hoja
+        rows_per_page = 20  
         for i, supplier in enumerate(queryset):
             if i % rows_per_page == 0 and i != 0:
-                # Si alcanza el límite de filas por hoja, crea una nueva página
+                
                 p.showPage()
                 logo_path = 'static/Iconos/iconopdf.png'
                 p.drawImage(logo_path, 50, 730, width=100, height=50)
@@ -298,12 +280,12 @@ class SuppliersAdmin(ImportExportModelAdmin):
                 p.setFont("Helvetica", 8)
                 p.drawRightString(300, 730, f"Generado el: {date_string}")
 
-                # PDF Title
+                
                 p.setFont("Helvetica", 16)
                 p.setFillColor(colors.darkblue)
                 p.drawString(150, 730, "Reporte de proveedores")
 
-                # Resto del código para el encabezado de la nueva página
+                
                 p.setFont("Helvetica", 16)
                 p.drawString(100, 800, "Reporte de proveedores")
                 p.setFont("Helvetica", 10)
@@ -311,7 +293,7 @@ class SuppliersAdmin(ImportExportModelAdmin):
                 p.drawString(150, 780, "Nombre")
                 p.drawString(280, 780, "Email")
                 p.drawString(480, 780, "Teléfono")
-                y_position = 760  # Reinicia la posición Y para la nueva página
+                y_position = 760  
 
             p.drawString(70, y_position, str(supplier.id))
             p.drawString(150, y_position, supplier.name)
@@ -319,7 +301,7 @@ class SuppliersAdmin(ImportExportModelAdmin):
             p.drawString(480, y_position, supplier.phone)
             y_position -= 20
 
-        # Close the PDF object cleanly, and we're done.
+        
         p.showPage()
         p.save()
 

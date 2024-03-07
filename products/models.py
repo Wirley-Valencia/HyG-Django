@@ -15,7 +15,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     expiration_date = models.DateField(null=True)
     amount = models.FloatField(null=True, verbose_name='Cantidad')
-    image = models.ImageField(upload_to='products/', null=False, blank=False)
+    image = models.ImageField(upload_to='media', null=False, blank=False)
     cantidad_disponible = models.IntegerField(default=0)
 
     def clean(self):
