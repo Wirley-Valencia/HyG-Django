@@ -27,8 +27,8 @@ class Cliente(models.Model):
                     'El teléfono debe contener solo números.')
             elif len(self.telefono) < 10:
                 raise ValidationError(
-                    'El teléfono debe tener menos de 10 dígitos.')
-
+                    'El teléfono debe tener menos de 10 dígitos.') 
+ 
 
 class Venta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)

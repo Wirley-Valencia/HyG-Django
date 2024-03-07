@@ -8,9 +8,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.exceptions import ValidationError
 from products.models import Product
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'proyectohyg.settings')  
+""" os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'proyectohyg.settings')  
 
-django.setup()
+django.setup() """
 
 
 
@@ -23,7 +23,7 @@ class ProductTestCase(TestCase):
             slug='test-product',
             image='products/test.jpg'
         )
-
+ 
     def test_product_creation(self):
         product = Product.objects.get(id=self.product.id)
         self.assertEqual(product.title, 'Test Product')
