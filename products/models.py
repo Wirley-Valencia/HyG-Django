@@ -14,7 +14,7 @@ class Product(models.Model):
     slug = models.SlugField(null=False, blank=False, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     expiration_date = models.DateField(null=True)
-    amount = models.FloatField(null=True, verbose_name='Cantidad')
+    
     image = models.ImageField(upload_to='media', null=False, blank=False)
     cantidad_disponible = models.IntegerField(default=0)
 

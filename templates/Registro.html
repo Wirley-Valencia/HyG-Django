@@ -89,6 +89,13 @@
                                 {{ form.cell_phone }}
                             </div>
                             <div class="form-outline mb-4">
+                                
+                                {{ form.accept_terms.label_tag }}
+                                {{ form.accept_terms }}
+                                {{ form.accept_terms.errors }}
+                            </div>
+                            
+                            <div class="form-outline mb-4">
                                 <button type="submit" class="btn btn-primary">Registrar</button>
                             </div>
                         </form>
