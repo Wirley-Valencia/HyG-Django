@@ -7,6 +7,8 @@ from django.contrib.auth import logout
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from user.forms import CustomUserCreationForm
+from categories.models import  Category
+from products.models import Product
 
 
 def inicio(request):
@@ -130,3 +132,4 @@ def contraseñaC(request):
     return render(request, 'contraseñaC.html', {
         # context
     })
+    
