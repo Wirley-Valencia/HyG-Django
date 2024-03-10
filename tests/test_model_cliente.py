@@ -4,7 +4,7 @@ from sales.models import Cliente
 @pytest.mark.django_db
 def test_cliente_model_validations():
     
-    cliente1 = Cliente(nombre='Cliente 1', email='cliente1@gmail.com', telefono='123456789')
+    cliente1 = Cliente(nombre='Cliente 1', email='cliente1@gmail.com', telefono='1234567890')
     cliente1.full_clean()  
 
     
