@@ -85,7 +85,7 @@ def login_view(request):
                 return redirect('admin:index')
             elif user.groups.filter(name='Empleados').exists():
                 # Redirección para empleados
-                return redirect('dashboard_administrador')
+                return redirect('admin:index')
             elif user.groups.filter(name='Clientes').exists():
                 # Redirección para clientes
                 return redirect('inicio')
