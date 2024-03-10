@@ -24,3 +24,10 @@ def test_cliente_model_validations():
         cliente4 = Cliente(nombre='Cliente 4', email='cliente4@gmail.com', telefono='12345')
         cliente4.full_clean()  
     assert 'El teléfono debe tener menos de 10 dígitos.' in str(e.value)
+@pytest.mark.django_db
+def test_create_cliente():
+    
+    cliente = Cliente.objects.create(nombre='Cliente de prueba', email='cliente@example.com', telefono='1234567890')
+    assert cliente.nombre == 'Cliente de prueba'
+    assert cliente.email == 'cliente@example.com'
+    assert cliente.telefono == '1234567890'
