@@ -14,9 +14,9 @@ MYSQL = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hygdb',
         'USER': 'root',
-        'PASSWORD': '1234',
+        'PASSWORD': '',
         'HOST': 'localhost',
-        'PORT': '3307'
+        'PORT': '3306'
     }
 }
 # MYSQL = {
