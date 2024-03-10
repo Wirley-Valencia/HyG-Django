@@ -31,3 +31,19 @@ def test_create_cliente():
     assert cliente.nombre == 'Cliente de prueba'
     assert cliente.email == 'cliente@example.com'
     assert cliente.telefono == '1234567890'
+@pytest.mark.django_db
+def test_update_cliente():
+    
+    cliente = Cliente.objects.create(nombre='Cliente de prueba', email='cliente@example.com', telefono='1234567890')
+
+    
+    cliente.nombre = 'Nuevo nombre de cliente'
+    cliente.email = 'nuevo_email@example.com'
+    cliente.telefono = '0987654321'
+    cliente.save()
+
+   
+    cliente_modificado = Cliente.objects.get(id=cliente.id)
+    assert cliente_modificado.nombre == 'Nuevo nombre de cliente'
+    assert cliente_modificado.email == 'nuevo_email@example.com'
+    assert cliente_modificado.telefono == '0987654321'
