@@ -1,31 +1,36 @@
 from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
-from .models import Product
+from .models import Product, Stock
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, landscape
 from datetime import datetime
 from reportlab.lib import colors
 from reportlab.lib.utils import simpleSplit
 from django.http import HttpResponse
+from django.db import models
 
+
+class StockInline(admin.TabularInline):
+    model = Stock
+    extra = 1
 
 @admin.register(Product)
-class ProductAdmin(ImportExportModelAdmin):
+class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'description', 'price',
-                    'created_at', 'expiration_date', 'cantidad_disponible')
-    list_editable = ('price', 'expiration_date', 'cantidad_disponible')
+                    'created_at', 'total_cantidad_disponible')
+    list_editable = ('price',)
     search_fields = ('title', 'description')
     list_per_page = 9
-    actions = ['generate_pdf']
+    inlines = [StockInline]
 
 
-    class ProductResource(resources.ModelResource):
-        class Meta:
-            model = Product
-            fields = ('id', 'title', 'description', 'price',
-                      'created_at', 'expiration_date', 'amount',
-                      'cantidad_disponible')
+@admin.register(Stock)
+class StockAdmin(admin.ModelAdmin):
+    list_display = ('id', 'product', 'expiration_date', 'cantidad_disponible')
+    list_editable = ('expiration_date', 'cantidad_disponible')
+    search_fields = ('product__title',)
+    list_per_page = 9
             
             
     def generate_pdf(self, request, queryset):
