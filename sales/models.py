@@ -64,9 +64,34 @@ class DetalleVenta(models.Model):
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def save(self, *args, **kwargs):
+        
+        producto = self.producto
+        cantidad_anterior = 0
 
+       
+        if self.pk:
+            detalle_anterior = DetalleVenta.objects.get(pk=self.pk)
+            cantidad_anterior = detalle_anterior.cantidad
+
+        super().save(*args, **kwargs)
+
+        producto.total_cantidad_disponible -= self.cantidad - cantidad_anterior
+        producto.save()
         self.subtotal = self.producto.price * self.cantidad
         super().save(*args, **kwargs)
+        self.venta.calcular_total()
+
+    def delete(self, *args, **kwargs):
+        
+        producto = self.producto
+        cantidad_anterior = self.cantidad
+        
+        super().delete(*args, **kwargs)
+
+        producto.total_cantidad_disponible += cantidad_anterior
+        producto.save()
+
+        
         self.venta.calcular_total()
 
     def clean(self):

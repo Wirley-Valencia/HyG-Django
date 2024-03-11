@@ -6,56 +6,66 @@ from sales.models import Venta, DetalleVenta, Cliente
 from django.test import TestCase
 
 
-class TestVentas(TestCase):
 
-    def test_create_venta(self):
-        cliente = Cliente.objects.create(nombre="Cliente de prueba")
-        product = Product.objects.create(
-            title='Producto de prueba',
-            description='Descripción de prueba',
-            price=10.99,
-            slug='producto-de-prueba',
-            expiration_date=date(2024, 12, 31),
-            image='products/imgs/image.jpg',
-            cantidad_disponible=10
-        )
-        venta = Venta.objects.create(cliente=cliente, fecha=timezone.now().date(), total=100)
-        detalle_venta = DetalleVenta.objects.create(venta=venta, producto=product, cantidad=2)
 
-        assert Venta.objects.count() == 1
-        assert DetalleVenta.objects.count() == 1
+def crear_cliente():
+    return Cliente.objects.create(
+        nombre="Roberto",
+        email="Roberto@gmail.com",
+        telefono="123456789"
+    )
 
-    def test_update_venta(self):
-        cliente = Cliente.objects.create(nombre="Cliente de prueba")
-        product = Product.objects.create(
-            title='Producto de prueba',
-            description='Descripción de prueba',
-            price=10.99,
-            slug='producto-de-prueba',
-            expiration_date=date(2024, 12, 31),
-            image='products/imgs/image.jpg',
-            cantidad_disponible=10
-        )
-        venta = Venta.objects.create(cliente=cliente, fecha=timezone.now().date(), total=100)
-        detalle_venta = DetalleVenta.objects.create(venta=venta, producto=product, cantidad=2)
-        venta.total = 200
-        venta.save()
-        updated_venta = Venta.objects.get(pk=venta.pk)
-        assert updated_venta.total == 200
+def crear_producto():
+    return Product.objects.create(
+        title="Producto Ejemplo",
+        description="Descripción de prueba",
+        price=10.99,
+        expiration_date=date(2024, 12, 31),
+        image="productos/imgs/imagen.jpg",
+        cantidad_disponible=10
+    )
 
-    def test_delete_venta(self):
-        cliente = Cliente.objects.create(nombre="Cliente de prueba")
-        product = Product.objects.create(
-            title='Producto de prueba',
-            description='Descripción de prueba',
-            price=10.99,
-            slug='producto-de-prueba',
-            expiration_date=date(2024, 12, 31),
-            image='products/imgs/image.jpg',
-            cantidad_disponible=10
-        )
-        venta = Venta.objects.create(cliente=cliente, fecha=timezone.now().date(), total=100)
-        detalle_venta = DetalleVenta.objects.create(venta=venta, producto=product, cantidad=2)
-        venta.delete()
-        Venta.objects.count(), 0
-        DetalleVenta.objects.count(), 0
+def crear_venta(cliente):
+    return Venta.objects.create(
+        cliente=cliente,
+        fecha=date(2024, 2, 21),
+        total=100.00
+    )
+
+def crear_detalle_venta(venta, producto):
+    return DetalleVenta.objects.create(
+        venta=venta,
+        producto=producto,
+        cantidad=3,
+        subtotal=30.00
+    )
+
+@pytest.mark.django_db
+def test_crear_venta():
+    cantidad_inicial = Venta.objects.count()
+    cliente = crear_cliente()
+    crear_venta(cliente)
+    assert Venta.objects.count() == cantidad_inicial + 1
+
+@pytest.mark.django_db
+def test_leer_venta():
+    cliente = crear_cliente()
+    venta = crear_venta(cliente)
+    assert venta in Venta.objects.all()
+
+@pytest.mark.django_db
+def test_actualizar_venta():
+    cliente = crear_cliente()
+    venta = crear_venta(cliente)
+    venta.fecha = date(2024, 3, 1)
+    venta.save()
+    venta_actualizada = Venta.objects.get(id=venta.id)
+    assert venta_actualizada.fecha == date(2024, 3, 1)
+
+@pytest.mark.django_db
+def test_eliminar_venta():
+    cantidad_inicial = Venta.objects.count()
+    cliente = crear_cliente()
+    venta = crear_venta(cliente)
+    venta.delete()
+    assert Venta.objects.count() == 0

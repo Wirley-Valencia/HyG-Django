@@ -28,7 +28,7 @@ class Compra(models.Model):
     datec = models.DateField(verbose_name='Fecha', null=True, blank=True)
     pricec = models.IntegerField(verbose_name='Precio')
     supplier = models.ForeignKey(Suppliers, on_delete=models.SET_NULL, null=True, verbose_name='Proveedor')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Producto')
+   
 
     def clean(self):
         # Validación para asegurarse de que 'amountc' no sea negativo
