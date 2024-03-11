@@ -6,6 +6,9 @@ from .utils import breadcrumb
 from django.shortcuts import redirect
 # Create your views here.
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .utils import destroy_order
+from carts.utils import destroy_cart
 
 
 @login_required(login_url='login')
@@ -40,3 +43,20 @@ def confirm(request):
         # 'shipping_address': shipping_address,
         'breadcrumb': breadcrumb(confirmation=True)
     })
+
+
+@login_required(login_url='login')
+def cancel(request):
+    cart = get_or_create_cart(request)
+    order = get_or_create_order(cart, request)
+
+    if request.user.id != order.user_id:
+        return redirect('carts:cart')
+
+    order.cancel()
+
+    destroy_order(request)
+    destroy_cart(request)
+
+    messages.error(request, 'Orden cancelada')
+    return redirect('inicio')

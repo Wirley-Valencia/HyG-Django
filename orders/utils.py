@@ -24,5 +24,5 @@ def breadcrumb(products=True, confirmation=False):
     ]
 
 
-# def destroy_order(request):
-#     request.session['order_id'] = None
+def destroy_order(request):
+    request.session['order_id'] = None

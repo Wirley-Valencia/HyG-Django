@@ -36,6 +36,10 @@ class Order(models.Model):
     def __str__(self):
         return self.order_id
 
+    def cancel(self):
+        self.status = OroderStatus.CANCELED
+        self.save()
+
     def update_total(self):
         self.total = self.get_total()
         self.save()
