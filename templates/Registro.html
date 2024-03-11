@@ -5,6 +5,8 @@
 <head id="header">
   <title>login</title>
   <!-- Required meta tags -->
+  <link rel="apple-touch-icon" href="{% static 'iconos/Icono H_G.png' %}">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'iconos/Icono H_G.png' %}">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -15,7 +17,7 @@
         .custom-height {
 
             padding-top: 30px;
-            height: 950px;
+            height: 800px;
         }
         .titulo-inicio{
             background-color:#1f57b5;
@@ -85,17 +87,16 @@
                                 {{ form.address }}
                             </div>
                             <div class="form-outline mb-4">
-                                <label for="id_location">Localidad:</label>
-                                {{ form.location }}
-                            </div>
-                            <div class="form-outline mb-4">
-                                <label for="id_telephone">Teléfono:</label>
-                                {{ form.telephone }}
-                            </div>
-                            <div class="form-outline mb-4">
                                 <label for="id_cell_phone">Celular:</label>
                                 {{ form.cell_phone }}
                             </div>
+                            <div class="form-outline mb-4">
+                                
+                                {{ form.accept_terms.label_tag }}
+                                {{ form.accept_terms }}
+                                {{ form.accept_terms.errors }}
+                            </div>
+                            
                             <div class="form-outline mb-4">
                                 <button type="submit" class="btn btn-primary">Registrar</button>
                             </div>

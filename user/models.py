@@ -9,17 +9,14 @@ class CustomUser(AbstractUser):
     #                           upload_to='users/', verbose_name='Imagen de perfil')
     address = models.CharField(
         max_length=150, null=True, blank=True, verbose_name='Dirección')
-    location = models.CharField(
-        max_length=150, null=True, blank=True, verbose_name='Localidad')
-    telephone = models.CharField(
-        max_length=50, null=True, blank=True, verbose_name='Teléfono')
+
     cell_phone = models.CharField(
         max_length=50, null=True, blank=True, verbose_name='Celular')
+    
+    accepted_terms = models.BooleanField(default=False)
 
     def clean(self):
-        if self.telephone and len(self.telephone) < 10:
-            raise ValidationError(
-                'El teléfono debe tener menos de 10 dígitos.')
+        
 
         if self.cell_phone and len(self.cell_phone) != 10:
             raise ValidationError('El celular debe tener 10 dígitos.')

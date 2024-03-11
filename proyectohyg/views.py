@@ -7,6 +7,8 @@ from django.contrib.auth import logout
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from user.forms import CustomUserCreationForm
+from categories.models import  Category
+from products.models import Product
 
 
 def inicio(request):
@@ -83,10 +85,10 @@ def login_view(request):
                 return redirect('admin:index')
             elif user.groups.filter(name='Empleados').exists():
                 # Redirección para empleados
-                return redirect('dashboard_administrador')
+                return redirect('admin:index')
             elif user.groups.filter(name='Clientes').exists():
                 # Redirección para clientes
-                return redirect('dashboard_cliente')
+                return redirect('inicio')
         else:
             messages.error(request, 'Usuario o contraseña incorrectos')
 
@@ -98,8 +100,7 @@ def registro(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            # Cambia 'home' con la URL a la que quieras redirigir después del registro
+            # login(request, user)
             return redirect('inicio')
     else:
         form = CustomUserCreationForm()
@@ -110,3 +111,25 @@ def logout_view(request):
     logout(request)
     messages.success(request, 'Sesión finalizada')
     return redirect('login')
+
+def rContraseña(request):
+    return render(request, 'plantillalogin.html', {
+        # context
+    })
+
+
+def AnuncioR(request):
+    return render(request, 'anuncioR.html', {
+        # context
+    })
+
+def nuevaC(request):
+    return render(request, 'nuevaC.html', {
+        # context
+    })
+
+def contraseñaC(request):
+    return render(request, 'contraseñaC.html', {
+        # context
+    })
+    

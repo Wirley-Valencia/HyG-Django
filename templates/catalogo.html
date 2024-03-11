@@ -2,14 +2,15 @@
 {% load static %}
 
 
-{% block title %}contacto{% endblock %}
+{% block title %}Catalogo{% endblock %}
 
 {% block content %}
 <div class="col">
-    <h4 class="text-center"> {{ message }} </h4>
+    <h2 class="text-center"> {{ message }} </h2>
     {% comment %} <p>Number of products: {{ products|length }}</p> {% endcomment %}
     {% include 'products/snippets/search.html' %}
     
+    <div class="row">
     {% for product in products %}
         <div class="col-3 mt-5">
 
@@ -17,7 +18,6 @@
 
         </div>
     {% endfor %}
-    
+    </div>
 </div>
-
 {% endblock %}
