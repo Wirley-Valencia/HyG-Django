@@ -10,6 +10,8 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 class Product(models.Model):
+    
+    
     title = models.CharField(max_length=50)
     description = models.TextField()
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
@@ -17,9 +19,19 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='media', null=False, blank=False)
     total_cantidad_disponible = models.IntegerField(default=0, null=True)
-
     
 
+    AVAILABLE = 'DIS'
+    INACTIVE = 'INA'
+    OUT_OF_STOCK = 'OOS'
+
+    STATUS_CHOICES = [
+        (AVAILABLE, 'Disponible'),
+        (INACTIVE, 'Inactivo'),
+        (OUT_OF_STOCK, 'Agotado'),
+    ]
+    status = models.CharField(max_length=3, choices=STATUS_CHOICES, default=AVAILABLE)
+    
     def __str__(self):
         return self.title
     
@@ -81,4 +93,10 @@ def update_product_total_cantidad_disponible(sender, instance, **kwargs):
     product = instance.product
     total_cantidad_disponible = Stock.objects.filter(product=product).aggregate(total=Sum('cantidad_disponible'))['total'] or 0
     product.total_cantidad_disponible = total_cantidad_disponible
+    
+    if total_cantidad_disponible == 0: 
+        product.status = Product.OUT_OF_STOCK
+    else:  
+        product.status = Product.AVAILABLE
+        
     product.save()

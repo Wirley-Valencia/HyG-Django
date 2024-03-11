@@ -2,19 +2,12 @@ import pytest
 from datetime import date
 from django.test import TestCase
 from hyg.models import Compra, Suppliers, Product
+from django.utils import timezone
+
 
 @pytest.mark.django_db
 def test_create_compra():
     supplier = Suppliers.objects.create(name='Proveedor de prueba')
-    product = Product.objects.create(
-        title='Producto de prueba',
-        description='Descripción de prueba',
-        price=10.99,
-        slug='producto-de-prueba',
-        expiration_date=date(2024, 12, 31),
-        image='products/imgs/image.jpg',
-        cantidad_disponible=10
-    )
 
     compra = Compra.objects.create(
         description='Compra de prueba',
@@ -22,7 +15,6 @@ def test_create_compra():
         datec=date(2024, 2, 21),
         pricec=100,
         supplier=supplier,
-        product=product
     )
 
     assert Compra.objects.count() == 1
@@ -31,15 +23,6 @@ def test_create_compra():
 @pytest.mark.django_db
 def test_update_compra():
     supplier = Suppliers.objects.create(name='Proveedor de prueba')
-    product = Product.objects.create(
-        title='Producto de prueba',
-        description='Descripción de prueba',
-        price=10.99,
-        slug='producto-de-prueba',
-        expiration_date=date(2024, 12, 31),
-        image='products/imgs/image.jpg',
-        cantidad_disponible=10
-    )
 
     compra = Compra.objects.create(
         description='Compra de prueba',
@@ -47,7 +30,6 @@ def test_update_compra():
         datec=date(2024, 2, 21),
         pricec=100,
         supplier=supplier,
-        product=product
     )
 
     compra.description = 'Compra actualizada'
@@ -58,15 +40,6 @@ def test_update_compra():
 @pytest.mark.django_db
 def test_delete_compra():
     supplier = Suppliers.objects.create(name='Proveedor de prueba')
-    product = Product.objects.create(
-        title='Producto de prueba',
-        description='Descripción de prueba',
-        price=10.99,
-        slug='producto-de-prueba',
-        expiration_date=date(2024, 12, 31),
-        image='products/imgs/image.jpg',
-        cantidad_disponible=10
-    )
 
     compra = Compra.objects.create(
         description='Compra de prueba',
@@ -74,9 +47,7 @@ def test_delete_compra():
         datec=date(2024, 2, 21),
         pricec=100,
         supplier=supplier,
-        product=product
     )
 
     compra.delete()
     assert Compra.objects.count() == 0
-

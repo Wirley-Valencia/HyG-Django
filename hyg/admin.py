@@ -12,17 +12,17 @@ from products.models import Product
 
 @admin.register(Compra)
 class CompraAdmin(ImportExportModelAdmin):
-    list_display = ('id', 'supplier', 'product', 'datec',
+    list_display = ('id', 'supplier', 'datec',
                     'amountc', 'pricec', 'description',)
-    list_editable = ('supplier', 'product',)
-    search_fields = ('supplier', 'product',)
+    list_editable = ('supplier', )
+    search_fields = ('supplier', )
     list_per_page = 9
     actions = ['generate_pdf']
     
     class CompraResource(resources.ModelResource):
         class Meta:
             model = Compra
-            fields = ('id', 'supplier', 'product', 'datec',
+            fields = ('id', 'supplier',  'datec',
                     'amountc', 'pricec', 'description',)
     
     def generate_pdf(self, request, queryset):
@@ -77,7 +77,7 @@ class CompraAdmin(ImportExportModelAdmin):
         p.drawString(400, 500, "Fecha")
         p.drawString(500, 500, "Precio")
         p.drawString(580, 500, "Proveedor")
-        p.drawString(680, 500, "Producto")
+
         p.setFillColor(colors.black)
 
        
@@ -108,7 +108,7 @@ class CompraAdmin(ImportExportModelAdmin):
                 p.drawString(400, 500, "Fecha")
                 p.drawString(500, 500, "Precio")
                 p.drawString(580, 500, "Proveedor")
-                p.drawString(680, 500, "Producto")
+               
                 p.setFillColor(colors.black)
                 y_position = 470  
 
@@ -118,7 +118,7 @@ class CompraAdmin(ImportExportModelAdmin):
             p.drawString(400, y_position, str(compra.datec))
             p.drawString(500, y_position, str(compra.pricec))
             p.drawString(580, y_position, compra.supplier.name)  
-            p.drawString(680, y_position, compra.product.title)
+            
             y_position -= 20
             
             
