@@ -10,16 +10,14 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 class Product(models.Model):
-    
-    
-    title = models.CharField(max_length=50)
-    description = models.TextField()
-    price = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
-    slug = models.SlugField(null=False, blank=False, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to='media', null=False, blank=False)
-    total_cantidad_disponible = models.IntegerField(default=0, null=True)
-    
+
+    title = models.CharField(max_length=50, verbose_name='Título')
+    description = models.TextField(verbose_name='Descripción')
+    price = models.DecimalField(max_digits=8, decimal_places=2, default=0.0, verbose_name='Precio')
+    slug = models.SlugField(null=False, blank=False, unique=True, verbose_name='Slug')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Creado en')
+    image = models.ImageField(upload_to='media', null=False, blank=False, verbose_name='Imagen')
+    total_cantidad_disponible = models.IntegerField(default=0, null=True, verbose_name='Cantidad disponible') 
 
     AVAILABLE = 'DIS'
     INACTIVE = 'INA'
@@ -53,6 +51,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Producto"
         verbose_name_plural = "Productos"
+        
 
 
 

@@ -1,0 +1,21 @@
+# Ignorar archivos de caché de Python
+*.pyc
+__pycache__/
+
+# Ignorar archivos de migraciones
+**/migrations/
+
+# Ignorar archivos generados de prueba
+# **/fixtures/
+
+# Ignorar archivos estáticos compilados
+# **/static/CSS/
+# **/static/Iconos/
+# **/static/js/
+# **/static/webfonts/
+
+# Ignorar archivos de configuración local
+**/proyectohyg/__pycache__/
+
+# Ignorar archivos de pruebas compilados
+**/tests/__pycache__/

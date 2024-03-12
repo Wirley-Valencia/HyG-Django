@@ -16,17 +16,18 @@ class StockInline(admin.TabularInline):
     extra = 1
 
 class ProductAdmin(ImportExportModelAdmin):
-    list_display = ('id', 'title', 'description', 'price', 'slug',  'status', 'total_cantidad_disponible')
+    list_display = ('id', 'title', 'description', 'price',  'status', 'total_cantidad_disponible')
     list_editable = ( 'price', 'status', 'total_cantidad_disponible')
-    search_fields = ('title', 'description', 'slug', 'status', )
+    search_fields = ('title', 'description', 'status', )
     list_per_page = 9
     inlines = [StockInline]
     actions = ['generate_pdf']
+    exclude = ['slug']
 
     class ProductResource(resources.ModelResource):
         class Meta:
             model = Product
-            fields = ('id', 'title', 'description', 'price', 'slug', 'created_at', 'status', 'total_cantidad_disponible')
+            fields = ('id', 'title', 'description', 'price', 'created_at', 'status', 'total_cantidad_disponible')
         
     def generate_pdf(self, request, queryset):
        
@@ -122,7 +123,6 @@ class StockAdmin(admin.ModelAdmin):
     list_editable = ('expiration_date', 'cantidad_disponible')
     search_fields = ('product__title',)
     list_per_page = 9
-            
             
     
 
