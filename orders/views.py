@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from carts.utils import get_or_create_cart
-from .models import Order
+from .models import Order, OrderPickup
 from .utils import get_or_create_order
 from .utils import breadcrumb
 from django.shortcuts import redirect
@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .utils import destroy_order
 from carts.utils import destroy_cart
+from .forms import OrderPickupForm
 
 
 @login_required(login_url='login')
@@ -60,3 +61,19 @@ def cancel(request):
 
     messages.error(request, 'Orden cancelada')
     return redirect('inicio')
+
+
+@login_required(login_url='login')
+def order_detail(request, order_id):
+    order = Order.objects.get(order_id=order_id)
+    if request.method == 'POST':
+        form = OrderPickupForm(request.POST)
+        if form.is_valid():
+            pickup_datetime = form.cleaned_data['pickup_datetime']
+            order_pickup = OrderPickup.objects.create(
+                order=order, pickup_datetime=pickup_datetime)
+            return redirect('order_detail', order_id=order_id)
+    else:
+        form = OrderPickupForm()
+
+    return render(request, 'order_detail.html', {'order': order, 'form': form})
