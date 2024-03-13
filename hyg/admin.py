@@ -14,8 +14,8 @@ from products.models import Product
 class CompraAdmin(ImportExportModelAdmin):
     list_display = ('id', 'supplier', 'datec',
                     'amountc', 'pricec', 'description',)
-    list_editable = ('supplier', )
-    search_fields = ('supplier', )
+    list_editable = ('datec', )
+    search_fields = ('datec', 'supplier__name',)
     list_per_page = 9
     actions = ['generate_pdf']
     
@@ -26,51 +26,29 @@ class CompraAdmin(ImportExportModelAdmin):
                     'amountc', 'pricec', 'description',)
     
     def generate_pdf(self, request, queryset):
-      
-        pdf_response_products = self.generate_pdf_report(queryset)
-        
-
-        queryset_compra = Compra.objects.all()  
-        pdf_response_compra = self.generate_pdf_report_compras(queryset_compra)
-
-
-        pdf_response_products.write(pdf_response_compra)
-
-     
+        pdf_response_compra = self.generate_pdf_report_compras(queryset)
         return pdf_response_compra
 
-    generate_pdf.short_description = "Generar PDF"
-
-    def generate_pdf_report(self, queryset):
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="reporte_productos.pdf"'
-
-
-        return response
 
     def generate_pdf_report_compras(self, queryset_compra):
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="reporte_compras.pdf"'
 
-        
         p = canvas.Canvas(response, pagesize=landscape(letter))
 
- 
-        logo_path = 'static/Iconos/H_G_Valencia.png'
-        p.drawImage(logo_path, 50, 550, width=100, height=50)
-        
+        logo_path = 'static/Iconos/icono_pdf.jpg'
+        p.drawImage(logo_path, 50, 550, width=150, height=50)
+
         date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         p.setFont("Helvetica", 8)
         p.drawRightString(770, 590, f"Generado el: {date_string}")
 
-       
         p.setFont("Helvetica", 18)
-        p.setFillColor(colors.darkblue) 
-        p.drawString(100, 530, "Reporte de compras")  
+        p.setFillColor(colors.darkblue)
+        p.drawString(550, 530, "Reporte de compras")
 
-        
         p.setFont("Helvetica", 10)
-        p.setFillColor(colors.darkblue) 
+        p.setFillColor(colors.darkblue)
         p.drawString(70, 500, "ID")
         p.drawString(120, 500, "Descripción")
         p.drawString(320, 500, "Cantidad")
@@ -80,53 +58,50 @@ class CompraAdmin(ImportExportModelAdmin):
 
         p.setFillColor(colors.black)
 
-       
         y_position = 470
-        rows_per_page = 20  
+        rows_per_page = 20
+        total_price = 0  # Inicializa el total de precios en 0
+
         for i, compra in enumerate(queryset_compra):
             if i % rows_per_page == 0 and i != 0:
-                
                 p.showPage()
-                
-                logo_path = 'static/Iconos/iconopdf.png'
-                p.drawImage(logo_path, 50, 550, width=100, height=50)
-                
-                date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                # Dibujar encabezado y logo nuevamente
+                p.drawImage(logo_path, 50, 550, width=150, height=50)
                 p.setFont("Helvetica", 8)
                 p.drawRightString(770, 590, f"Generado el: {date_string}")
-
                 p.setFont("Helvetica", 18)
-                p.setFillColor(colors.darkblue) 
-                p.drawString(100, 530, "Reporte de compras") 
-
-                
+                p.setFillColor(colors.darkblue)
+                p.drawString(550, 530, "Reporte de compras")
                 p.setFont("Helvetica", 10)
-                p.setFillColor(colors.darkblue) 
+                p.setFillColor(colors.darkblue)
                 p.drawString(70, 500, "ID")
                 p.drawString(120, 500, "Descripción")
                 p.drawString(320, 500, "Cantidad")
                 p.drawString(400, 500, "Fecha")
                 p.drawString(500, 500, "Precio")
                 p.drawString(580, 500, "Proveedor")
-               
                 p.setFillColor(colors.black)
-                y_position = 470  
+                y_position = 470
 
             p.drawString(70, y_position, str(compra.id))
             p.drawString(120, y_position, compra.description)
             p.drawString(330, y_position, str(compra.amountc))
             p.drawString(400, y_position, str(compra.datec))
             p.drawString(500, y_position, str(compra.pricec))
-            p.drawString(580, y_position, compra.supplier.name)  
-            
+            p.drawString(580, y_position, compra.supplier.name)
+
+            total_price += compra.pricec  # Agrega el precio de la compra al total
             y_position -= 20
-            
-            
+
+        # Muestra el total de precios en el PDF
+        p.setFont("Helvetica", 12)
+        p.drawString(400, 50, f"Total de precios: {total_price}")
 
         p.showPage()
         p.save()
 
         return response
+
     
     
 @admin.register(Gastos)   
@@ -144,19 +119,19 @@ class GastosAdmin(ImportExportModelAdmin):
             fields = ('id', 'description', 'date', 'price',)
             
     def generate_pdf(self, request, queryset):
-        
-        pdf_response = self.generate_pdf_report(queryset)
-        return pdf_response
+            pdf_response_gastos = self.generate_pdf_report_gastos(queryset)
+            return pdf_response_gastos
 
-    generate_pdf.short_description = "Generar PDF"
+   
 
-    def generate_pdf_report(self, queryset):
+    def generate_pdf_report_gastos(self, queryset_gastos):
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="reporte_gastos.pdf"'
 
-        p = canvas.Canvas(response, pagesize=letter)
+        p = canvas.Canvas(response, pagesize=landscape(letter))
 
-        logo_path = 'static/Iconos/H_G_Valencia.png'
+
+        logo_path = 'static/Iconos/icono_pdf.jpg'
         p.drawImage(logo_path, 50, 730, width=100, height=50)
         
         date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -180,11 +155,11 @@ class GastosAdmin(ImportExportModelAdmin):
         
         y_position = 645
         rows_per_page = 20  
-        for i, gasto in enumerate(queryset):
+        for i, gasto in enumerate(queryset_gastos):
             if i % rows_per_page == 0 and i != 0:
                 
                 p.showPage()
-                logo_path = 'static/Iconos/iconopdf.png'
+                logo_path = 'static/Iconos/icono_pdf.jpg'
                 p.drawImage(logo_path, 50, 730, width=100, height=50)
                 
                 date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -248,7 +223,7 @@ class SuppliersAdmin(ImportExportModelAdmin):
         
         p = canvas.Canvas(response, pagesize=letter)
 
-        logo_path = 'static/Iconos/H_G_Valencia.png'
+        logo_path = 'static/Iconos/icono_pdf.jpg'
         p.drawImage(logo_path, 50, 730, width=100, height=50)
 
         date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -273,7 +248,7 @@ class SuppliersAdmin(ImportExportModelAdmin):
             if i % rows_per_page == 0 and i != 0:
                 
                 p.showPage()
-                logo_path = 'static/Iconos/iconopdf.png'
+                logo_path = 'static/Iconos/icono_pdf.jpg'
                 p.drawImage(logo_path, 50, 730, width=100, height=50)
 
                 date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

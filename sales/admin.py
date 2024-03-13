@@ -49,7 +49,7 @@ class VentaAdmin(ImportExportModelAdmin):
         # Create the PDF object, using the response object as its "file."
         p = canvas.Canvas(response, pagesize=letter)
 
-        logo_path = 'static/Iconos/H_G_Valencia.png'
+        logo_path = 'static/Iconos/icono_pdf.jpg'
         p.drawImage(logo_path, 50, 730, width=100, height=50)
 
         date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -77,7 +77,7 @@ class VentaAdmin(ImportExportModelAdmin):
             if i % rows_per_page == 0 and i != 0:
                 # Si alcanza el límite de filas por hoja, crea una nueva página
                 p.showPage()
-                logo_path = 'static/Iconos/iconopdf.png'
+                logo_path = 'static/Iconos/icono_pdf.jpg'
                 p.drawImage(logo_path, 50, 730, width=100, height=50)
 
                 date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

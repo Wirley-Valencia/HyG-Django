@@ -8,12 +8,7 @@ from decimal import Decimal
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.exceptions import ValidationError
 
-<<<<<<< HEAD
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'proyectohyg.settings')
-=======
 """ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'proyectohyg.settings')  
->>>>>>> fac592d0643d61a148092b5d3a86d429f687e647
 
 django.setup() """
 
