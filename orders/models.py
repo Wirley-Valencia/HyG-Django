@@ -20,7 +20,7 @@ choices = [(tag, tag.value) for tag in OroderStatus]
 class Order(models.Model):
     order_id = models.CharField(
         max_length=100, null=False, blank=False, unique=True)
-    
+
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     status = models.CharField(
@@ -48,6 +48,19 @@ class Order(models.Model):
 
     def get_total(self):
         return self.cart.total + self.shipping_total
+
+
+class OrderPickup(models.Model):
+    order = models.OneToOneField(
+        Order, on_delete=models.CASCADE, related_name='pickup_info')
+    pickup_datetime = models.DateTimeField()
+
+    class Meta:
+        verbose_name = "Información de Recogida"
+        verbose_name_plural = "Información de Recogida"
+
+    def __str__(self):
+        return f"Recogida para la orden {self.order.order_id}"
 
 
 def set_order_id(sender, instance, *args, **kwargs):
