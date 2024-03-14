@@ -18,7 +18,7 @@ class CompraAdmin(ImportExportModelAdmin):
     list_display = ('id', 'supplier', 'datec',
                     'amountc', 'pricec', 'description',)
     list_editable = ('datec', )
-    search_fields = ('datec', 'supplier__name',)
+    search_fields = ('datec', 'supplier__company',)
     list_per_page = 9
     actions = ['generate_pdf']
     
@@ -242,7 +242,7 @@ class GastosAdmin(ImportExportModelAdmin):
         return lines
     
     def draw_total_price(self, canvas, total_price):
-        # Define el color personalizado para el fondo del rectángulo
+        
         light_sky_blue = colors.Color(0.53, 0.81, 0.98)  # RGB para LightSkyBlue
 
         # Dibuja el rectángulo de fondo azul claro
@@ -259,85 +259,75 @@ class GastosAdmin(ImportExportModelAdmin):
 
 @admin.register(Suppliers)
 class SuppliersAdmin(ImportExportModelAdmin):
-    list_display = ('id', 'name', 'email', 'phone',)
+    list_display = ('id','company','name', 'email', 'phone',)
     list_editable = ('email', 'phone',)
+    search_fields = ('company',)
     actions = ['generate_pdf']
     
     class SuppliersResource(resources.ModelResource):
         class Meta:
             model = Suppliers
-            fields = ('id', 'name', 'email', 'phone',)
+            fields = ('id', 'company','name', 'email', 'phone',)
             
     def generate_pdf(self, request, queryset):
-        
-        pdf_response = self.generate_pdf_report(queryset)
-        return pdf_response
+        pdf_response_Suppliers = self.generate_pdf_report_Suppliers(queryset)
+        return pdf_response_Suppliers
 
-    generate_pdf.short_description = "Generar PDF"
-
-    def generate_pdf_report(self, queryset):
+    def generate_pdf_report_Suppliers(self, queryset_Suppliers):
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="reporte_proveedores.pdf"'
 
-        
-        p = canvas.Canvas(response, pagesize=letter)
+        p = canvas.Canvas(response, pagesize=portrait(letter))
 
         logo_path = 'static/Iconos/icono_pdf.jpg'
-        p.drawImage(logo_path, 50, 730, width=100, height=50)
-
         date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        p.setFont("Helvetica", 8)
-        p.drawRightString(600, 730, f"Generado el: {date_string}")
 
-        p.setFont("Helvetica", 16)
-        p.setFillColor(colors.darkblue)
-        p.drawString(100, 700, "Reporte de proveedores")
-
-        p.setFont("Helvetica", 10)
-        p.setFillColor(colors.darkblue)
-        p.drawString(70, 675, "ID")
-        p.drawString(150, 675, "Nombre")
-        p.drawString(280, 675, "Email")
-        p.drawString(480, 675, "Teléfono")
-        p.setFillColor(colors.black)
+        self.draw_header(p, logo_path, date_string)
+        self.draw_table_header(p)
 
         y_position = 645
-        rows_per_page = 20  
-        for i, supplier in enumerate(queryset):
-            if i % rows_per_page == 0 and i != 0:
-                
-                p.showPage()
-                logo_path = 'static/Iconos/icono_pdf.jpg'
-                p.drawImage(logo_path, 50, 730, width=100, height=50)
-
-                date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                p.setFont("Helvetica", 8)
-                p.drawRightString(300, 730, f"Generado el: {date_string}")
-
-                
-                p.setFont("Helvetica", 16)
-                p.setFillColor(colors.darkblue)
-                p.drawString(150, 730, "Reporte de proveedores")
-
-                
-                p.setFont("Helvetica", 16)
-                p.drawString(100, 800, "Reporte de proveedores")
-                p.setFont("Helvetica", 10)
-                p.drawString(70, 780, "ID")
-                p.drawString(150, 780, "Nombre")
-                p.drawString(280, 780, "Email")
-                p.drawString(480, 780, "Teléfono")
-                y_position = 760  
-
-            p.drawString(70, y_position, str(supplier.id))
-            p.drawString(150, y_position, supplier.name)
-            p.drawString(280, y_position, supplier.email)
-            p.drawString(480, y_position, supplier.phone)
-            y_position -= 20
-
+        rows_per_page = 20
         
-        p.showPage()
+        
+        for i, Suppliers in enumerate(queryset_Suppliers):
+            if i % rows_per_page == 0 and i != 0:
+                p.showPage()  # Crear una nueva página
+                self.draw_header(p, logo_path, date_string)  # Dibujar el encabezado en la nueva página
+                self.draw_table_header(p)  # Dibujar el encabezado de la tabla en la nueva página
+                y_position =  645 # Restablecer la posición Y
+
+            self.draw_compra_details(p, Suppliers, y_position)  # Dibujar los detalles del proveedor
+            y_position -= 45  # Ajustar la posición Y para la siguiente fila
+
+   
+
+
         p.save()
 
         return response
 
+    def draw_header(self, canvas, logo_path, date_string):
+        canvas.drawImage(logo_path, 50, 730, width=150, height=50)
+        canvas.setFont("Helvetica", 8)
+        canvas.drawRightString(600, 730, f"Generado el: {date_string}")
+        canvas.setFont("Helvetica", 18)
+        canvas.setFillColor(colors.darkblue)
+        canvas.drawString(100, 700, "Reporte de proveedores")
+
+    def draw_table_header(self, canvas):
+        canvas.setFont("Helvetica", 10)
+        canvas.setFillColor(colors.darkblue)
+        canvas.drawString(55, 675, "ID")
+        canvas.drawString(75, 675, "Empresa")
+        canvas.drawString(215, 675, "Nombre Proveedor")
+        canvas.drawString(315, 675, "Correo")
+        canvas.drawString(460, 675, "Telefono")
+    
+        canvas.setFillColor(colors.black)
+
+    def draw_compra_details(self, canvas, Suppliers, y_position):
+        canvas.drawString(55, y_position, str(Suppliers.id))
+        canvas.drawString(75, y_position, str(Suppliers.company))
+        canvas.drawString(215, y_position, str(Suppliers.name))
+        canvas.drawString(315, y_position, str(Suppliers.email))
+        canvas.drawString(460, y_position, str(Suppliers.phone))
