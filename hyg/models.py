@@ -4,6 +4,12 @@ from products.models import Product
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from email.mime.multipart import MIMEMultipart
 # Create your models here.
 
 
@@ -28,7 +34,22 @@ class Compra(models.Model):
     datec = models.DateField(verbose_name='Fecha', null=True, blank=True)
     pricec = models.IntegerField(verbose_name='Precio')
     supplier = models.ForeignKey(Suppliers, on_delete=models.SET_NULL, null=True, verbose_name='Proveedor')
-   
+
+    @staticmethod
+    def send_email_to_supplier(sender, instance, created, **kwargs):
+        if created:
+            subject = 'Nueva compra realizada'
+            template = 'email/email_compra.html'
+            context = {'purchase': instance}
+
+            # Renderizar el contenido del correo electrónico desde una plantilla HTML
+            html_message = render_to_string(template, context)
+            plain_message = strip_tags(html_message)
+            from_email = 'vanessavalencia1052@gmail.com' 
+            to_email = instance.supplier.email
+
+            # Enviar el correo electrónico
+            send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
 
     def clean(self):
         # Validación para asegurarse de que 'amountc' no sea negativo
@@ -55,9 +76,6 @@ class Compra(models.Model):
     def __str__(self):
         return self.description
     
-    
-
-
 class Gastos(models.Model):
     description = models.CharField(max_length=255, null=True)
     date = models.DateField(null=True)
@@ -71,3 +89,4 @@ class Gastos(models.Model):
         verbose_name_plural = 'gastos'
         db_table = 'gastos'
         ordering = ['id']
+post_save.connect(Compra.send_email_to_supplier, sender=Compra)
