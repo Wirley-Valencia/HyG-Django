@@ -35,13 +35,14 @@
         
         </div>
     </div>
-    <form method="post">
+    <form id="confirm-form" method="post" action="{% url 'orders:confirm_order' %}">
         {% csrf_token %}
         <div class="form-group">
+            <input type="hidden" name="order_id" value="{{ order.id }}">
             <label for="pickup_datetime">Fecha y hora de recogida:</label>
             <input type="datetime-local" id="pickup_datetime" name="pickup_datetime" class="form-control" required>
         </div>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button id="confirm-button" type="submit" class="btn btn-primary">Guardar</button>
     </form>
     <div class="mt-2">
         <a href= {% url "orders:confirm" %} class="btn btn-warning">Confirmar pedido</a>

@@ -21,17 +21,15 @@ def add(request):
     product = get_object_or_404(Product, pk=request.POST.get('product_id'))
     quantity = int(request.POST.get('quantity', 1))
 
-    # cart.products.add(product, through_defaults={
-    #     'quantity': quantity
-    # })
-
     cart_product = CartProducts.objects.create_or_update_quantity(
         cart=cart, product=product, quantity=quantity)
 
     product.total_cantidad_disponible -= quantity
     product.save()
 
+    print("antes")
     return render(request, 'carts/add.html', {
+
         'quantity': quantity,
         'product': product
     })

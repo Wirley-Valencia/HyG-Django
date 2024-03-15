@@ -29,7 +29,6 @@ class Order(models.Model):
         default=5, max_digits=8, decimal_places=2)
     total = models.DecimalField(default=0, max_digits=8, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
-    pickup_datetime = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Orden"
