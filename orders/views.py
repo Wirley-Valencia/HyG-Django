@@ -145,6 +145,8 @@ def confirm_order(request):
     if request.method == 'POST':
         cart = get_or_create_cart(request)
         order = get_or_create_order(cart, request)
+        print("Esta es la orden")
+        print(order)
         pickup_datetime_str = request.POST.get('pickup_datetime')
         pickup_datetime = datetime.strptime(
             pickup_datetime_str, '%Y-%m-%dT%H:%M')
@@ -152,7 +154,7 @@ def confirm_order(request):
         # Crear instancia de OrderPickup
         order_pickup = OrderPickup(
             order=order, pickup_datetime=pickup_datetime)
-        order_pickup.save()
+        order_pickup.save(order)
 
         return redirect('orders:confirm')
 
