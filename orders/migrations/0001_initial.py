@@ -17,13 +17,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Order',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('order_id', models.CharField(max_length=100, unique=True)),
-                ('status', models.CharField(choices=[(orders.models.OroderStatus['CREATED'], 'CREATED'), (orders.models.OroderStatus['PAYED'], 'PAYED'), (orders.models.OroderStatus['COMPLETED'], 'COMPLETED'), (orders.models.OroderStatus['CANCELED'], 'CANCELED')], default=orders.models.OroderStatus['CREATED'], max_length=50)),
-                ('shipping_total', models.DecimalField(decimal_places=2, default=5, max_digits=8)),
-                ('total', models.DecimalField(decimal_places=2, default=0, max_digits=8)),
+                # ('status', models.CharField(choices=[(orders.models.OroderStatus['CREATED'], 'CREATED'), (orders.models.OroderStatus['PAYED'], 'PAYED'), (orders.models.OroderStatus['COMPLETED'], 'COMPLETED'), (orders.models.OroderStatus['CANCELED'], 'CANCELED')], default=orders.models.OroderStatus['CREATED'], max_length=50)),
+                ('shipping_total', models.DecimalField(
+                    decimal_places=2, default=5, max_digits=8)),
+                ('total', models.DecimalField(
+                    decimal_places=2, default=0, max_digits=8)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('cart', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='carts.cart')),
+                ('cart', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='carts.cart')),
             ],
             options={
                 'verbose_name': 'Orden',

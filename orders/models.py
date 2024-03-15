@@ -20,7 +20,6 @@ choices = [(tag, tag.value) for tag in OroderStatus]
 class Order(models.Model):
     order_id = models.CharField(
         max_length=100, null=False, blank=False, unique=True)
-
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     status = models.CharField(
@@ -29,7 +28,6 @@ class Order(models.Model):
         default=5, max_digits=8, decimal_places=2)
     total = models.DecimalField(default=0, max_digits=8, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
-    pickup_datetime = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Orden"
