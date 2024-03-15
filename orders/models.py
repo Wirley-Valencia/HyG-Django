@@ -20,7 +20,6 @@ choices = [(tag, tag.value) for tag in OroderStatus]
 class Order(models.Model):
     order_id = models.CharField(
         max_length=100, null=False, blank=False, unique=True)
-
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     status = models.CharField(

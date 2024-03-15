@@ -1,4 +1,5 @@
 # from .models import Order, PickupDateTimeForm
+from datetime import datetime
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 from carts.utils import get_or_create_cart
@@ -14,6 +15,7 @@ from carts.utils import destroy_cart
 from .forms import OrderPickupForm
 from django.shortcuts import get_object_or_404
 from django.db import IntegrityError
+from django.utils import timezone
 
 
 @login_required(login_url='login')
@@ -101,39 +103,57 @@ def cancel(request):
 #         return redirect('inicio')
 
 
-@login_required(login_url='login')
-def confirm_order(request):
-    if request.method == 'POST':
-        order_id = request.POST.get('order_id')
-        order = get_object_or_404(Order, id=order_id)
+# @login_required(login_url='login')
+# def confirm_order(request):
+#     if request.method == 'POST':
+#         order_id = request.POST.get('order_id')
+#         print("El id es al;sdkfjl;akdsfj;lkajsdfl;kajsdfklja;dflskja;lsdkfj;laksdfj;lkasdjfl;kjasdfl;kjas;dlfkj;alksdfj;lkadsfj;lkajs")
+#         print(order_id)
+#         order = get_object_or_404(Order, id=order_id)
 
-        # Obtener la fecha y hora de recogida del formulario
-        pickup_datetime = request.POST.get('pickup_datetime')
+#         # Obtener la fecha y hora de recogida del formulario
+#         pickup_datetime = request.POST.get('pickup_datetime')
+#         print("El pickup_datetime es al;sdkfjl;akdsfj;lkajsdfl;kajsdfklja;dflskja;lsdkfj;laksdfj;lkasdjfl;kjasdfl;kjas;dlfkj;alksdfj;lkadsfj;lkajs")
+#         print(pickup_datetime)
+#         # Verificar si ya existe una instancia de OrderPickup para este pedido
+#         order_pickup, created = OrderPickup.objects.get_or_create(order=order)
 
-        # Verificar si ya existe una instancia de OrderPickup para este pedido
-        order_pickup, created = OrderPickup.objects.get_or_create(order=order)
+#         # Si ya existe, actualizar la fecha y hora de recogida
+#         order_pickup.pickup_datetime = pickup_datetime
+#         order_pickup.save()
 
-        # Si ya existe, actualizar la fecha y hora de recogida
-        order_pickup.pickup_datetime = pickup_datetime
-        order_pickup.save()
+#         # Redirigir a la vista 'confirm'
+#         return redirect('orders:confirm')
 
-        # Redirigir a la vista 'confirm'
-        return redirect('orders:confirm')
-
-    return render(request, 'tu_template.html')
+#     return render(request, 'tu_template.html')
 
 
 # @login_required(login_url='login')
 # def confirm_order(request):
 #     if request.method == 'POST':
-#         order_id = request.POST.get('order_id')
-#         print(order_id)
+#         cart = get_or_create_cart(request)
+#         order = get_or_create_order(cart, request)
+#         pickup_datetime_str = request.POST.get('pickup_datetime')
 
-#         pickup_datetime = request.POST.get('pickup_datetime')
-#         order = Order.objects.get(id=order_id)
-#         order_pickup, created = OrderPickup.objects.get_or_create(order=order)
-#         order_pickup.pickup_datetime = timezone.datetime.strptime(
-#             pickup_datetime, '%Y-%m-%dT%H:%M')
-#         order_pickup.save()
 #         return redirect('orders:confirm')
-#     return render(request, 'confirm.html')
+
+#     return render(request, 'tu_template.html')
+
+
+@login_required(login_url='login')
+def confirm_order(request):
+    if request.method == 'POST':
+        cart = get_or_create_cart(request)
+        order = get_or_create_order(cart, request)
+        pickup_datetime_str = request.POST.get('pickup_datetime')
+        pickup_datetime = datetime.strptime(
+            pickup_datetime_str, '%Y-%m-%dT%H:%M')
+
+        # Crear instancia de OrderPickup
+        order_pickup = OrderPickup(
+            order=order, pickup_datetime=pickup_datetime)
+        order_pickup.save()
+
+        return redirect('orders:confirm')
+
+    return render(request, 'tu_template.html')
