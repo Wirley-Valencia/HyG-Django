@@ -49,6 +49,7 @@ urlpatterns = [
         template_name='nuevaC.html'), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
         template_name='contraseñaC.html'), name='password_reset_complete'),
+    path('perfil/', views.perfil_usuario, name='perfil_usuario'),
 
 ]
 

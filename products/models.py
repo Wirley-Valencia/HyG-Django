@@ -79,9 +79,19 @@ def set_slug(sender, instance, *args, **kwargs):  # callback
 pre_save.connect(set_slug, sender=Product)
 
 class Stock(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    expiration_date = models.DateField(null=True)
-    cantidad_disponible = models.IntegerField(default=0)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Producto')
+    expiration_date = models.DateField(null=True, verbose_name='Fecha de Vencimiento')
+    cantidad_disponible = models.IntegerField(default=0, verbose_name='Cantidad Disponible')
+    codigo = models.CharField(max_length=50, unique=True, verbose_name='Codigo')
+    AVAILABLE = 'DIS'
+    INACTIVE = 'INA'
+    
+
+    STATUS_CHOICES = [
+        (AVAILABLE, 'Disponible'),
+        (INACTIVE, 'Inactivo'),
+    ]
+    status = models.CharField(max_length=3, choices=STATUS_CHOICES, default=AVAILABLE, verbose_name='Estado')
 
     def __str__(self):
         return f"{self.product.title} - {self.expiration_date}"

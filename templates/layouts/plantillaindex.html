@@ -88,8 +88,11 @@
                 {% if user.is_authenticated %}
                 <div class="dropdown">
                     <img src="{% static 'iconos/usuario.png' %}" alt="menu" class="img-fluid">
+                    <div class="col-sm-12 text-center">
+                        <h6 class="">{{ user.username }}</h6>
+                    </div>
                     <div class="dropdown-content">
-                      <a href="#">Perfil</a>
+                      <a href="{% url 'perfil_usuario' %}">Perfil</a>
                       <a href="{% url 'logout' %}">Cerrar Sesion</a>
                     </div>
                 {% else %}

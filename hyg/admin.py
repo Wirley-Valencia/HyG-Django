@@ -318,7 +318,7 @@ class SuppliersAdmin(ImportExportModelAdmin):
         canvas.setFont("Helvetica", 10)
         canvas.setFillColor(colors.darkblue)
         canvas.drawString(55, 675, "ID")
-        canvas.drawString(75, 675, "Empresa")
+        canvas.drawString(90, 675, "Empresa")
         canvas.drawString(215, 675, "Nombre Proveedor")
         canvas.drawString(315, 675, "Correo")
         canvas.drawString(460, 675, "Telefono")
