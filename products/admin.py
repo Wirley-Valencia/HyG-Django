@@ -44,7 +44,7 @@ class ProductAdmin(ImportExportModelAdmin):
         p = canvas.Canvas(response, pagesize=landscape(letter))
 
         
-        logo_path = 'static/Iconos/H_G_Valencia.png'
+        logo_path = 'static/Iconos/icono_pdf.jpg'
         p.drawImage(logo_path, 50, 550, width=100, height=50)
         
         date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -74,7 +74,7 @@ class ProductAdmin(ImportExportModelAdmin):
                 
                 p.showPage()
                     
-                logo_path = 'static/Iconos/H_G_Valencia.png'
+                logo_path = 'static/Iconos/icono_pdf.jpg'
                 p.drawImage(logo_path, 50, 550, width=100, height=50)
                 
                 date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
