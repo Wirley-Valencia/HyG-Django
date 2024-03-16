@@ -9,6 +9,8 @@ from django.contrib import messages
 from user.forms import CustomUserCreationForm
 from categories.models import  Category
 from products.models import Product
+from django.contrib.auth.decorators import login_required
+
 
 
 def inicio(request):
@@ -132,4 +134,14 @@ def contraseñaC(request):
     return render(request, 'contraseñaC.html', {
         # context
     })
+
+@login_required
+def perfil_usuario(request):
+    # Obtener el usuario actualmente autenticado
+    user = request.user
+
+    # Aquí podrías también obtener más información del usuario si es necesario,
+    # como la dirección, utilizando el modelo UserProfile o similar.
+
+    return render(request, 'perfil.html', {'user': user})
     

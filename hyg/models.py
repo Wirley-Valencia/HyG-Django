@@ -14,9 +14,10 @@ from email.mime.multipart import MIMEMultipart
 
 
 class Suppliers(models.Model):
-    email = models.CharField(max_length=255, null=True, blank=True)
-    name = models.CharField(max_length=255, null=True, blank=True)
-    phone = models.CharField(max_length=255, null=True, blank=True)
+    company = models.CharField(max_length=255, null=True, blank=True, verbose_name='Empresa')
+    email = models.CharField(max_length=255, null=True, blank=True, verbose_name='Correo')
+    name = models.CharField(max_length=255, null=True, blank=True, verbose_name='Nombre Proveedor')
+    phone = models.CharField(max_length=255, null=True, blank=True, verbose_name='Numero de contacto')
 
     def __str__(self):
         return self.name
@@ -77,9 +78,9 @@ class Compra(models.Model):
         return self.description
     
 class Gastos(models.Model):
-    description = models.CharField(max_length=255, null=True)
-    date = models.DateField(null=True)
-    price = models.IntegerField()
+    description = models.CharField(max_length=255, null=True, verbose_name='Descripción')
+    date = models.DateField(null=True, verbose_name='Fecha')
+    price = models.IntegerField(verbose_name='Valor del gasto')
 
     def __str__(self):
         return self.description

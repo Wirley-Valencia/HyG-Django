@@ -34,6 +34,10 @@ class Venta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     fecha = models.DateField()
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0,null=True )
+    
+    class Meta:
+        verbose_name = "Venta"
+        verbose_name_plural = "Ventas"
 
     def calcular_total(self):
         detalles = DetalleVenta.objects.filter(venta=self)

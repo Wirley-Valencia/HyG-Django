@@ -4,9 +4,9 @@ from products.models import Product
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=50)
-    description = models.TextField()
-    products = models.ManyToManyField(Product, blank=True)
+    title = models.CharField(max_length=50, verbose_name='Titulo')
+    description = models.TextField(verbose_name='Descripción')
+    products = models.ManyToManyField(Product, blank=True, verbose_name='Productos')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -8,6 +8,16 @@ from django.utils import timezone
 from django.db.models import Sum
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.core.mail import send_mail
+
+
+CustomUser = get_user_model()
+
+
 
 class Product(models.Model):
 
@@ -51,7 +61,29 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Producto"
         verbose_name_plural = "Productos"
+
+    @staticmethod
+    def check_product_stock(sender, instance, created, **kwargs):
+        CustomUser = get_user_model()
+        usuarios = CustomUser.objects.filter(is_staff=1)
         
+        for usuario in usuarios:
+            if not created and instance.total_cantidad_disponible == 5:
+                subject = 'Producto a punto de agotarse'
+                template = 'email/email_quantity_warning.html'
+                context = {'product': instance}
+
+                html_message = render_to_string(template, context)
+                plain_message = strip_tags(html_message)
+                from_email = 'vanessavalencia1052@gmail.com' 
+                to_email = usuario.email  # Obtener el correo electrónico del usuario
+
+                # Enviar el correo electrónico al usuario
+                send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
+
+post_save.connect(Product.check_product_stock, sender=Product)
+
+
 
 
 
@@ -79,9 +111,19 @@ def set_slug(sender, instance, *args, **kwargs):  # callback
 pre_save.connect(set_slug, sender=Product)
 
 class Stock(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    expiration_date = models.DateField(null=True)
-    cantidad_disponible = models.IntegerField(default=0)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Producto')
+    expiration_date = models.DateField(null=True, verbose_name='Fecha de Vencimiento')
+    cantidad_disponible = models.IntegerField(default=0, verbose_name='Cantidad Disponible')
+    codigo = models.CharField(max_length=50, unique=True, verbose_name='Codigo')
+    AVAILABLE = 'DIS'
+    INACTIVE = 'INA'
+    
+
+    STATUS_CHOICES = [
+        (AVAILABLE, 'Disponible'),
+        (INACTIVE, 'Inactivo'),
+    ]
+    status = models.CharField(max_length=3, choices=STATUS_CHOICES, default=AVAILABLE, verbose_name='Estado')
 
     def __str__(self):
         return f"{self.product.title} - {self.expiration_date}"
@@ -99,3 +141,4 @@ def update_product_total_cantidad_disponible(sender, instance, **kwargs):
         product.status = Product.AVAILABLE
         
     product.save()
+  
