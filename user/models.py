@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
+from orders.common import OroderStatus
 # Create your models here.
 
 
@@ -12,11 +13,10 @@ class CustomUser(AbstractUser):
 
     cell_phone = models.CharField(
         max_length=50, null=True, blank=True, verbose_name='Celular')
-    
+
     accepted_terms = models.BooleanField(default=False)
 
     def clean(self):
-        
 
         if self.cell_phone and len(self.cell_phone) != 10:
             raise ValidationError('El celular debe tener 10 dígitos.')
@@ -28,3 +28,6 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    def orders_completed(self):
+        return self.order_set.filter(status=OroderStatus.COMPLETED).order_by('-id')

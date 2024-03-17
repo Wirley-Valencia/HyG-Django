@@ -1,20 +1,11 @@
 from django.db import models
 from user.models import CustomUser
 from carts.models import Cart
-from enum import Enum
 from django.db.models.signals import pre_save
 import uuid
+from .common import OroderStatus, choices
+
 # Create your models here.
-
-
-class OroderStatus(Enum):
-    CREATED = 'CREATED'
-    PAYED = "PAYED"
-    COMPLETED = 'COMPLETED'
-    CANCELED = 'CANCELED'
-
-
-choices = [(tag, tag.value) for tag in OroderStatus]
 
 
 class Order(models.Model):
@@ -38,6 +29,10 @@ class Order(models.Model):
 
     def cancel(self):
         self.status = OroderStatus.CANCELED
+        self.save()
+
+    def complete(self):
+        self.status = OroderStatus.COMPLETED
         self.save()
 
     def update_total(self):

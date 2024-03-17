@@ -1,5 +1,5 @@
 {% load static %}
-{% comment %} {% url 'carts:cart' as cart %} {% endcomment %}
+{% url 'orders:completeds' as completeds %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,10 +78,14 @@
                             </a>
                         </li>
                         {% if user.is_authenticated %}
-                            <li class="nav-item">
+                            {% comment %} <li class="nav-item">
                                 <a class="nav-link" href="#">Mis pedidos</a>
+                            </li>  {% endcomment %}
+                            <li class="nav-item {% url 'orders:completeds' %}active">
+                                <a class="nav-link" href="{{ completeds }}">
+                                    Mis pedidos <span class="fas fa-shipping-fast"></span>
+                                </a>
                             </li>
-
                         {% endif %}
                     </ul>
                 </div>
@@ -102,6 +106,7 @@
             </div>
         </div>
     </nav>
+    <br>
     <!-- Close Header -->
     {% block breadcrumb %}
     {% endblock %}  

@@ -1,5 +1,7 @@
 # from .models import Order, PickupDateTimeForm
 from datetime import datetime
+from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 from carts.utils import get_or_create_cart
@@ -16,12 +18,24 @@ from .forms import OrderPickupForm
 from django.shortcuts import get_object_or_404
 from django.db import IntegrityError
 from django.utils import timezone
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.db.models.query import EmptyQuerySet
+from django.views.generic.list import ListView
+from .decorators import validate_cart_and_order
+
+
+class OrderListView(LoginRequiredMixin, ListView):
+    login_url = "login"
+    template_name = "orders/orders.html"
+
+    def get_queryset(self):
+        return self.request.user.orders_completed()
 
 
 @login_required(login_url='login')
-def order(request):
-    cart = get_or_create_cart(request)
-    order = get_or_create_order(cart, request)
+@validate_cart_and_order
+def order(request, cart, order):
 
     return render(request, 'orders/order.html', {
         'cart': cart,
@@ -31,21 +45,8 @@ def order(request):
 
 
 @login_required(login_url='login')
-# @validate_cart_and_order
-def confirm(request):
-    cart = get_or_create_cart(request)
-    order = get_or_create_order(cart, request)
-    return render(request, 'orders/confirm.html', {
-        'cart': cart,
-        'order': order,
-        'breadcrumb': breadcrumb(confirmation=True)
-    })
-
-
-@login_required(login_url='login')
-def cancel(request):
-    cart = get_or_create_cart(request)
-    order = get_or_create_order(cart, request)
+@validate_cart_and_order
+def cancel(request, cart, order):
 
     if request.user.id != order.user_id:
         return redirect('carts:cart')
@@ -59,112 +60,63 @@ def cancel(request):
     return redirect('inicio')
 
 
-# @login_required(login_url='login')
-# def order_detail(request, order_id):
-#     order = Order.objects.get(order_id=order_id)
-#     if request.method == 'POST':
-#         form = OrderPickupForm(request.POST)
-#         if form.is_valid():
-#             pickup_datetime = form.cleaned_data['pickup_datetime']
-#             order_pickup = OrderPickup(
-#                 order=order, pickup_datetime=pickup_datetime)
-#             order_pickup.save()  # Guardar el objeto OrderPickup en la base de datos
-#             return redirect('order_detail', order_id=order_id)
-#     else:
-#         form = OrderPickupForm()
+@login_required(login_url='login')
+@validate_cart_and_order
+def confirm(request, cart, order):
 
-#     return render(request, 'order_detail.html', {'order': order, 'form': form})
-
-# @login_required(login_url='login')
-# def confirm_order(request):
-#     if request.method == 'POST':
-#         order_id = request.POST.get('order_id')
-#         pickup_datetime = request.POST.get('pickup_datetime')
-#         order = Order.objects.get(order_id=order_id)
-#         order.pickup_datetime = pickup_datetime
-#         order.save()
-#         return render(request, 'orders/confirm.html', {'order': order})
-#     else:
-#         return redirect('inicio')
-
-# @login_required(login_url='login')
-# def confirm_order(request):
-#     if request.method == 'POST':
-#         form = OrderPickupForm(request.POST)
-#         if form.is_valid():
-#             order_id = request.POST.get('order_id')
-#             print(order_id)
-#             pickup_datetime = form.cleaned_data['pickup_datetime']
-#             order = Order.objects.get(order_id=order_id)
-#             order.pickup_datetime = pickup_datetime
-#             order.save()
-#             return render(request, 'orders/confirm.html', {'order': order})
-#     else:
-#         return redirect('inicio')
+    return render(request, 'orders/confirm.html', {
+        'cart': cart,
+        'order': order,
+        'breadcrumb': breadcrumb(confirmation=True)
+    })
 
 
 # @login_required(login_url='login')
-# def confirm_order(request):
-#     if request.method == 'POST':
-#         order_id = request.POST.get('order_id')
-#         print("El id es al;sdkfjl;akdsfj;lkajsdfl;kajsdfklja;dflskja;lsdkfj;laksdfj;lkasdjfl;kjasdfl;kjas;dlfkj;alksdfj;lkadsfj;lkajs")
-#         print(order_id)
-#         order = get_object_or_404(Order, id=order_id)
+# # @validate_cart_and_order
+# def complete(request):
+#     cart = get_or_create_cart(request)
+#     order = get_or_create_order(cart, request)
 
-#         # Obtener la fecha y hora de recogida del formulario
-#         pickup_datetime = request.POST.get('pickup_datetime')
-#         print("El pickup_datetime es al;sdkfjl;akdsfj;lkajsdfl;kajsdfklja;dflskja;lsdkfj;laksdfj;lkasdjfl;kjasdfl;kjas;dlfkj;alksdfj;lkadsfj;lkajs")
-#         print(pickup_datetime)
-#         # Verificar si ya existe una instancia de OrderPickup para este pedido
-#         order_pickup, created = OrderPickup.objects.get_or_create(order=order)
+#     if request.user.id != order.user_id:
+#         return redirect('carts:cart')
 
-#         # Si ya existe, actualizar la fecha y hora de recogida
-#         order_pickup.pickup_datetime = pickup_datetime
-#         order_pickup.save()
+#     order.complete()
 
-#         # Redirigir a la vista 'confirm'
-#         return redirect('orders:confirm')
+#     destroy_order(request)
+#     destroy_cart(request)
 
-#     return render(request, 'tu_template.html')
+#     messages.success(request, 'Compra realizada con éxito')
 
-
-# @login_required(login_url='login')
-# def confirm_order(request):
-#     if request.method == 'POST':
-#         cart = get_or_create_cart(request)
-#         order = get_or_create_order(cart, request)
-#         pickup_datetime_str = request.POST.get('pickup_datetime')
-
-#         return redirect('orders:confirm')
-
-#     return render(request, 'tu_template.html')
+#     return redirect('inicio')
 
 
 @login_required(login_url='login')
-def confirm_order(request):
+@validate_cart_and_order
+def confirm_order(request, cart, order):
     if request.method == 'POST':
-        print("Esta es la orden")
-        cart = get_or_create_cart(request)
-        order = get_or_create_order(cart, request)
-        print("Esta es la orden")
+
         print(order)
         pickup_datetime_str = request.POST.get('pickup_datetime')
-        print("Esta es la fechaa")
+
+        if request.user.id != order.user_id:
+            return redirect('carts:cart')
 
         pickup_datetime = datetime.strptime(
             pickup_datetime_str, '%Y-%m-%dT%H:%M')
-        print(pickup_datetime)
 
         order_pickup, created = OrderPickup.objects.get_or_create(
             order=order, defaults={'pickup_datetime': pickup_datetime})
 
         if not created:
             order_pickup.pickup_datetime = pickup_datetime
-            print(order_pickup.pickup_datetime)
             order_pickup.save()
 
-        print("Finall")
-        print(order_pickup.pickup_datetime)
+        order.complete()
+
+        # destroy_order(request)
+        # destroy_cart(request)
+
+        messages.success(request, 'Compra realizada con éxito')
 
         return redirect('orders:confirm')
 

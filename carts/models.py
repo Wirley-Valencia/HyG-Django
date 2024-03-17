@@ -8,6 +8,7 @@ from django.db.models.signals import pre_save,  post_save
 from django.db.models.signals import m2m_changed
 import decimal
 from django.core.exceptions import ValidationError
+from orders.common import OroderStatus
 
 
 class Cart (models.Model):
@@ -50,7 +51,7 @@ class Cart (models.Model):
 
     @property
     def order(self):
-        return self.order_set.first()
+        return self.order_set.filter(status=OroderStatus.CREATED).first()
 
     def clean(self):
         # Validación para asegurarse de que 'subtotal' no sea negativo
