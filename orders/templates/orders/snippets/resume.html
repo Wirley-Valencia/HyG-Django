@@ -35,7 +35,7 @@
         
         </div>
     </div> {% endcomment %}
-    <form id="confirm-form" method="post" action="{% url 'orders:confirm' %}">
+    <form id="confirm-form" method="post" action="{% url 'orders:confirm_order' %}">
         {% csrf_token %}
         <input type="hidden" name="order_id" value="{{ order.id }}">
         <div class="form-group">
@@ -51,7 +51,7 @@
     </div>
 </div>
 
-<script>
+{% comment %} <script>
     document.getElementById("confirm-button").addEventListener("click", function(event) {
         var fechaRecogida = document.getElementById("pickup_datetime").value;
         if (fechaRecogida.trim() === "") {
@@ -61,4 +61,4 @@
             document.getElementById("confirm-form").submit(); // Envía el formulario
         }
     });
-</script>
+</script> {% endcomment %}

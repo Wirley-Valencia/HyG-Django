@@ -143,18 +143,28 @@ def cancel(request):
 @login_required(login_url='login')
 def confirm_order(request):
     if request.method == 'POST':
+        print("Esta es la orden")
         cart = get_or_create_cart(request)
         order = get_or_create_order(cart, request)
         print("Esta es la orden")
         print(order)
         pickup_datetime_str = request.POST.get('pickup_datetime')
+        print("Esta es la fechaa")
+
         pickup_datetime = datetime.strptime(
             pickup_datetime_str, '%Y-%m-%dT%H:%M')
+        print(pickup_datetime)
 
-        # Crear instancia de OrderPickup
-        order_pickup = OrderPickup(
-            order=order, pickup_datetime=pickup_datetime)
-        order_pickup.save(order)
+        order_pickup, created = OrderPickup.objects.get_or_create(
+            order=order, defaults={'pickup_datetime': pickup_datetime})
+
+        if not created:
+            order_pickup.pickup_datetime = pickup_datetime
+            print(order_pickup.pickup_datetime)
+            order_pickup.save()
+
+        print("Finall")
+        print(order_pickup.pickup_datetime)
 
         return redirect('orders:confirm')
 
