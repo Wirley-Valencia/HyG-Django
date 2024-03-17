@@ -9,6 +9,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #     }
 # }
 
+# MYSQL = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'hygdb',
+#         'USER': 'root',
+#         'PASSWORD': '1234',
+#         'HOST': 'localhost',
+#         'PORT': '3307'
+#     }
+# }
 MYSQL = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -19,16 +29,6 @@ MYSQL = {
         'PORT': '3306'
     }
 }
-# MYSQL = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'hygdb',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '3306'
-#     }
-# }
 
 
 # POSTGRESQL = {

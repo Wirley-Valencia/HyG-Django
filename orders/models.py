@@ -45,7 +45,7 @@ class Order(models.Model):
         self.save()
 
     def get_total(self):
-        return self.cart.total + self.shipping_total
+        return self.cart.total
 
 
 class OrderPickup(models.Model):

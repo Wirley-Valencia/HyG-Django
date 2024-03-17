@@ -10,7 +10,6 @@ import decimal
 from django.core.exceptions import ValidationError
 
 
-
 class Cart (models.Model):
     cart_id = models.CharField(
         max_length=100, null=False, blank=False, unique=True)
@@ -18,7 +17,7 @@ class Cart (models.Model):
                              blank=True, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product, through='CartProducts')
     subtotal = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
-    total = models.DecimalField(default=0.0, max_digits=8, decimal_places=2)
+    total = models.DecimalField(default=0.0, max_digits=8, decimal_places=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     FEE = 0.05
@@ -43,8 +42,7 @@ class Cart (models.Model):
         self.save()
 
     def update_total(self):
-        self.total = self.subtotal + \
-            (self.subtotal * decimal.Decimal(Cart.FEE))
+        self.total = self.subtotal
         self.save()
 
     def products_related(self):
@@ -53,11 +51,12 @@ class Cart (models.Model):
     @property
     def order(self):
         return self.order_set.first()
-    
+
     def clean(self):
         # Validación para asegurarse de que 'subtotal' no sea negativo
         if self.subtotal < 0:
-            raise ValidationError({'subtotal': 'El subtotal no puede ser negativo.'})
+            raise ValidationError(
+                {'subtotal': 'El subtotal no puede ser negativo.'})
 
         # Validación para asegurarse de que 'total' no sea negativo
         if self.total < 0:

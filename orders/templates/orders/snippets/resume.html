@@ -25,7 +25,7 @@
             </tbody>
         </table>
     </div>
-    <div class="">
+    {% comment %} <div class="">
         <hr>
         <div class="font-weight-bold text-danger">
             Total (Impuestos incluidos)
@@ -34,20 +34,31 @@
             </div>
         
         </div>
-    </div>
+    </div> {% endcomment %}
     <form id="confirm-form" method="post" action="{% url 'orders:confirm_order' %}">
         {% csrf_token %}
+        <input type="hidden" name="order_id" value="{{ order.id }}">
         <div class="form-group">
-            <input type="hidden" name="order_id" value="{{ order.id }}">
             <label for="pickup_datetime">Fecha y hora de recogida:</label>
             <input type="datetime-local" id="pickup_datetime" name="pickup_datetime" class="form-control" required>
         </div>
-        <button id="confirm-button" type="submit" class="btn btn-primary">Guardar</button>
+        <button id="confirm-button" type="submit" class="btn btn-primary">Confirmar pedido</button>
     </form>
+    
+
     <div class="mt-2">
-        <a href= {% url "orders:confirm" %} class="btn btn-warning">Confirmar pedido</a>
+        <a href="{% url 'orders:cancel' %}" class="btn btn-danger">Cancelar la orden</a>
     </div>
-    <div class="mt-2">
-        <a href= {% url "orders:cancel" %} class="btn btn-danger">Cancelar la orden</a>
-    </div>
-</div> 
+</div>
+
+{% comment %} <script>
+    document.getElementById("confirm-button").addEventListener("click", function(event) {
+        var fechaRecogida = document.getElementById("pickup_datetime").value;
+        if (fechaRecogida.trim() === "") {
+            event.preventDefault(); // Detiene el envío del formulario
+            alert("Por favor, seleccione una fecha y hora de recogida.");
+        } else {
+            document.getElementById("confirm-form").submit(); // Envía el formulario
+        }
+    });
+</script> {% endcomment %}

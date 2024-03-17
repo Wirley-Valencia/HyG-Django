@@ -5,4 +5,4 @@ register = template.Library()
 
 @register.filter()
 def price_format(value):
-    return '${0:2f}'.format(value)
+    return '${0:.0f}'.format(value)

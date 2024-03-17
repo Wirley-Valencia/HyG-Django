@@ -14,14 +14,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Product',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=50)),
                 ('description', models.TextField()),
-                ('price', models.DecimalField(decimal_places=2, default=0.0, max_digits=8)),
+                ('price', models.DecimalField(
+                    decimal_places=2, default=0.0, max_digits=8)),
                 ('slug', models.SlugField(unique=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('expiration_date', models.DateField(null=True)),
-                ('amount', models.FloatField(null=True, verbose_name='Cantidad')),
                 ('image', models.ImageField(upload_to='products/')),
                 ('cantidad_disponible', models.IntegerField(default=0)),
             ],
