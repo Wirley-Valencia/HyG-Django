@@ -1,1 +1,1 @@
-web: gunicorn proyectohyg.wsgi
+web: python manage.py migrate && gunicorn proyectohyg.wsgi
