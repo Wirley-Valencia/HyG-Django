@@ -2,10 +2,24 @@ from django.db import models
 from user.models import CustomUser
 from carts.models import Cart
 from enum import Enum
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 import uuid
-# Create your models here.
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.dispatch import receiver
+from email.mime.multipart import MIMEMultipart
+from django.contrib.auth import get_user_model
 
+CustomUser = get_user_model()
+
+def obtener_email_usuario(user_id):
+    try:
+        usuario = CustomUser.objects.get(id=user_id)
+        correo = usuario.email
+        return correo
+    except CustomUser.DoesNotExist:
+        return None
 
 class OroderStatus(Enum):
     CREATED = 'CREATED'
@@ -13,9 +27,7 @@ class OroderStatus(Enum):
     COMPLETED = 'COMPLETED'
     CANCELED = 'CANCELED'
 
-
 choices = [(tag, tag.value) for tag in OroderStatus]
-
 
 class Order(models.Model):
     order_id = models.CharField(
@@ -47,7 +59,6 @@ class Order(models.Model):
     def get_total(self):
         return self.cart.total
 
-
 class OrderPickup(models.Model):
     order = models.OneToOneField(
         Order, on_delete=models.CASCADE, related_name='pickup_info')
@@ -60,15 +71,32 @@ class OrderPickup(models.Model):
     def __str__(self):
         return f"Recogida para la orden {self.order.order_id}"
 
-
 def set_order_id(sender, instance, *args, **kwargs):
     if not instance.order_id:
         instance.order_id = str(uuid.uuid4())
 
-
 def set_total(sender, instance, *args, **kwargs):
     instance.total = instance.get_total()
 
-
 pre_save.connect(set_order_id, sender=Order)
 pre_save.connect(set_total, sender=Order)
+
+@receiver(post_save, sender=Order)
+
+def send_email_user(sender, instance, created, **kwargs):
+    if created:
+        subject = 'Nuevo pedido realizado'
+        template = 'email/email_order_user.html'
+        
+      
+        nombre_cliente = instance.user.username  
+        codigo_orden = instance.order_id
+        
+      
+        context = {'nombre_cliente': nombre_cliente, 'codigo_orden': codigo_orden}
+        
+        html_message = render_to_string(template, context)
+        plain_message = strip_tags(html_message)
+        from_email = 'vanessavalencia1052@gmail.com' 
+        to_email = instance.user.email  
+        send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
