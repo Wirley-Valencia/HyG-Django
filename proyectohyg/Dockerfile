@@ -18,3 +18,9 @@ EXPOSE 8000
 
 # Comando para ejecutar la aplicación Django
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+ENV MYSQLCLIENT_CFLAGS="-I/usr/include/mysql"
+ENV MYSQLCLIENT_LDFLAGS="-L/usr/lib/x86_64-linux-gnu -lmysqlclient"
+
+RUN pip install --upgrade pip
+
