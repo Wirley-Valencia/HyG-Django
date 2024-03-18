@@ -13,6 +13,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.core.mail import send_mail
+from django.db import transaction
 
 
 CustomUser = get_user_model()
@@ -43,20 +44,14 @@ class Product(models.Model):
     def __str__(self):
         return self.title
     
+    
 
     def clean(self):
-        # if self.expiration_date and self.expiration_date < timezone.now().date():
-        #     raise ValidationError(
-        #         'La fecha de expiración no puede ser anterior a la fecha actual.')
 
         if self.price < 100:
             raise ValidationError('El precio debe tener por lo menos 3 digitos.')
 
-        # if self.cantidad_disponible is not None and self.cantidad_disponible < 0:
-        #     raise ValidationError('La cantidad no puede ser negativa.')
-    # def save(self, *args, **kwargs):
-    #     self.slug = slugify(self.title)
-    #     super(Product, self).save(*args, **kwargs)
+      
 
     class Meta:
         verbose_name = "Producto"
@@ -85,17 +80,6 @@ post_save.connect(Product.check_product_stock, sender=Product)
 
 
 
-
-
-    # def restar_stock(self, cantidad):
-    #     """
-    #     Resta la cantidad especificada del stock del producto.
-    #     """
-    #     self.stock -= cantidad
-    #     self.save()
-
-
-
 def set_slug(sender, instance, *args, **kwargs):  # callback
     if instance.title and not instance.slug:
         slug = slugify(instance.title)
@@ -109,6 +93,7 @@ def set_slug(sender, instance, *args, **kwargs):  # callback
 
 
 pre_save.connect(set_slug, sender=Product)
+
 
 class Stock(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Producto')
@@ -126,19 +111,40 @@ class Stock(models.Model):
     status = models.CharField(max_length=3, choices=STATUS_CHOICES, default=AVAILABLE, verbose_name='Estado')
 
     def __str__(self):
-        return f"{self.product.title} - {self.expiration_date}"
+        return f"{self.product.title}"
     
+
+        
+@receiver(post_save, sender=Product)
+def update_product_status(sender, instance, **kwargs):
+    if instance.total_cantidad_disponible == 0:
+        Product.objects.filter(pk=instance.pk).update(status=Product.OUT_OF_STOCK)
+    else:
+        Product.objects.filter(pk=instance.pk).update(status=Product.AVAILABLE)
+
+@receiver(post_save, sender=Stock)
+def update_stock_status(sender, instance, **kwargs):
+    if instance.cantidad_disponible == 0 or instance.expiration_date <= timezone.now().date():
+        Stock.objects.filter(pk=instance.pk).update(status=Stock.INACTIVE)
+    else:
+        Stock.objects.filter(pk=instance.pk).update(status=Stock.AVAILABLE)
+        
+# @receiver(post_save, sender=Stock)
+# def update_total_quantity(sender, instance, **kwargs):
+#     product = instance.product
+#     if product.pk is not None:  # Verificar si el producto tiene un pk asignado
+#         total_quantity = Stock.objects.filter(product=product).aggregate(total_quantity=models.Sum('cantidad_disponible'))['total_quantity']
+#         if total_quantity is None:
+#             total_quantity = 0
+#         product.total_cantidad_total = total_quantity
+#         product.save()
+        
 @receiver(post_save, sender=Stock)
 @receiver(post_delete, sender=Stock)
 def update_product_total_cantidad_disponible(sender, instance, **kwargs):
     product = instance.product
     total_cantidad_disponible = Stock.objects.filter(product=product).aggregate(total=Sum('cantidad_disponible'))['total'] or 0
     product.total_cantidad_disponible = total_cantidad_disponible
-    
-    if total_cantidad_disponible == 0: 
-        product.status = Product.OUT_OF_STOCK
-    else:  
-        product.status = Product.AVAILABLE
-        
+       
     product.save()
   
