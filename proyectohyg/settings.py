@@ -63,7 +63,7 @@ JAZZMIN_SETTINGS = {
     "site_title": "HYG",
     "site_header": "HYG",
     "site_logo": "Iconos\icono H_G.png",
-    "show_ui_builder": True,
+    "show_ui_builder": False,
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.Group": "fas fa-users",

@@ -5,19 +5,20 @@
 {% block title %}Catalogo{% endblock %}
 
 {% block content %}
-<div class="col">
+<div class="col" id="fondonC">
     <h2 class="text-center"> {{ message }} </h2>
     {% comment %} <p>Number of products: {{ products|length }}</p> {% endcomment %}
     {% include 'products/snippets/search.html' %}
     
-    <div class="row">
-    {% for product in products %}
-        <div class="col-3 mt-5">
-
-            {% include 'products/snippets/product.html' %}
-
+    <main class="container-fluid vh-100 " id="fondonC">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-3 col-sm-6 mt-5">
+                    {% include 'products/snippets/product.html' %}
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-    </div>
+    </main>
+    
 </div>
 {% endblock %}

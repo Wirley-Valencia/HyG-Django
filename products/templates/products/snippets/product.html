@@ -1,8 +1,11 @@
   <!-- Product -->
+  {% load static %}
+
   <div class="card h-100">
     {% if product.image %}
         <a href="{{ product.image.url }}" target="_blank">
-            <img src="{{ product.image.url }}" alt="Imagen del producto" height="200">
+            <img src="{{ product.image.url }}" alt="Imagen del producto" style="width: 250px; height: auto; display: block; margin-left: auto; margin-right: auto;" class="img-fluid">
+
         </a>
     {% endif %}
 

@@ -135,13 +135,34 @@ def contraseñaC(request):
         # context
     })
 
+
+
 @login_required
 def perfil_usuario(request):
-    # Obtener el usuario actualmente autenticado
+    
     user = request.user
-
-    # Aquí podrías también obtener más información del usuario si es necesario,
-    # como la dirección, utilizando el modelo UserProfile o similar.
-
+    
     return render(request, 'perfil.html', {'user': user})
+
+
+@login_required
+def editar_informacion(request):
+    usuario = request.user  
+    return render(request, 'EditarPerfil.html', {'user': usuario})
+@login_required
+def guardar_informacion(request):
+    if request.method == 'POST':
+        usuario = request.user
+        usuario.username = request.POST.get('username')
+        usuario.first_name = request.POST.get('first_name')
+        usuario.last_name = request.POST.get('last_name')
+        usuario.email = request.POST.get('email')
+        usuario.address = request.POST.get('address')
+        usuario.cell_phone = request.POST.get('cell_phone')
+        usuario.save()
+        return redirect('perfil_usuario')  # Redirige al perfil del usuario después de guardar los cambios
+    else:
+        # Manejar caso si el método no es POST
+        # Puedes redirigir a algún lugar o mostrar un mensaje de error
+        return redirect('editar_informacion')  # Redirigir de nuevo a la página de edición
     

@@ -70,7 +70,7 @@ class Product(models.Model):
         for usuario in usuarios:
             if not created and instance.total_cantidad_disponible == 5:
                 subject = 'Producto a punto de agotarse'
-                template = 'email/email_quantity_warning.html'
+                template = 'email/email_quiantity_warning.html'
                 context = {'product': instance}
 
                 html_message = render_to_string(template, context)

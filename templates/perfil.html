@@ -3,11 +3,11 @@
 
 
 
-{% block title %}nosotros{% endblock %}
+{% block title %}Perfil{% endblock %}
 
 {% block content %}
 
-<main class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+<main class="container-fluid vh-100 d-flex align-items-center justify-content-center" id="mainperfil">
     <div class="card">
         <div class="card-body">
             <div class="card">
@@ -25,6 +25,9 @@
                             <p><strong>Dirección:</strong> {{ user.address }}</p>
                             <p><strong>Celular:</strong> {{ user.cell_phone }}</p>
                         </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{% url 'editar_informacion' %}" class="btn btn-primary">Editar Información</a>
                     </div>
                 </div>
             </div>
