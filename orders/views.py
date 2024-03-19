@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import render
 from carts.utils import get_or_create_cart
 from .models import Order, OrderPickup
+from sales.models import Venta
 from .utils import get_or_create_order
 from .utils import breadcrumb
 from django.shortcuts import redirect
@@ -94,16 +95,11 @@ def confirm(request, cart, order):
 @validate_cart_and_order
 def confirm_order(request, cart, order):
     if request.method == 'POST':
-
-        print(order)
         pickup_datetime_str = request.POST.get('pickup_datetime')
-
-        if request.user.id != order.user_id:
-            return redirect('carts:cart')
-
         pickup_datetime = datetime.strptime(
             pickup_datetime_str, '%Y-%m-%dT%H:%M')
 
+        # Crear una instancia de OrderPickup
         order_pickup, created = OrderPickup.objects.get_or_create(
             order=order, defaults={'pickup_datetime': pickup_datetime})
 
@@ -111,10 +107,23 @@ def confirm_order(request, cart, order):
             order_pickup.pickup_datetime = pickup_datetime
             order_pickup.save()
 
-        order.complete()
+        # cliente, created = Cliente.objects.get_or_create(
+        #     email=order.user.email,
+        #     defaults={'telefono': order.user.customuser.cell_phone}
+        # )
 
-        # destroy_order(request)
-        # destroy_cart(request)
+        # if created:
+        #     cliente.nombre = order.user.username
+        #     cliente.save()
+
+        # venta = Venta.objects.create(
+        #     cliente=cliente,
+        #     fecha=pickup_datetime.date(),
+        #     total=order.total,
+        # )
+
+        order.complete()
+        # order.delete()  # Eliminar el pedido una vez completada la venta
 
         messages.success(request, 'Compra realizada con éxito')
 

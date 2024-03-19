@@ -73,7 +73,7 @@ def add(request):
             messages.success(request, 'Producto agregado al carrito.')
     else:
         messages.error(
-            request, 'Stock insuficiente. No puedes agregar mas ')
+            request, 'Stock insuficiente. No puedes agregar mas productos')
 
     return render(request, 'carts/add.html', {
         'quantity': quantity,
