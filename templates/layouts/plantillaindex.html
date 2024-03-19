@@ -1,5 +1,7 @@
-{% load static %}
+
+
 {% url 'orders:completeds' as completeds %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +18,7 @@
 
    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
-    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}">
 
     <style>
         .dropdown {
@@ -65,7 +67,7 @@
     <nav class="navbar navbar-expand-lg navbar-light shadow">
         <div class="container d-flex justify-content-between align-items-center">
             <a class="navbar-brand text-success logo h1 align-self-center" href="{% url 'inicio' %}">
-                <img src="{% static 'iconos/H_G_Valencia.png' %}" alt="Logo de H G Valencia">
+                <img src="{% static '/iconos/H_G_Valencia.png' %}" alt="Logo de H G Valencia">
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
