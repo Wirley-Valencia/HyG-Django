@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.http import HttpResponse
 from .models import Compra,  Suppliers, Gastos
 from import_export import resources
-from import_export import ...
 from import_export.admin import ImportExportModelAdmin
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, landscape, portrait
