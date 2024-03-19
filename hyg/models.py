@@ -20,7 +20,7 @@ class Suppliers(models.Model):
     phone = models.CharField(max_length=255, null=True, blank=True, verbose_name='Numero de contacto')
 
     def __str__(self):
-        return self.name
+        return self.company
 
     class Meta:
         verbose_name = 'proveedor'

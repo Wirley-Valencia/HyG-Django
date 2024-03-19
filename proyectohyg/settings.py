@@ -56,13 +56,14 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 SILENCED_SYSTEM_CHECKS = ["security.W019"]
 
 JAZZMIN_SETTINGS = {
-    "site_brand": "H&G Valencia",                                                                                                                                
+    "site_brand": "H&G Valencia",
     'welcome_sign': 'Bienvenido Admin',
-    'login_logo':'Iconos\H_G Valencia.png',
+    'login_logo': 'Iconos\H_G Valencia.png',
     'site_icon': 'Iconos\icono H_G.png',
     "site_title": "HYG",
     "site_header": "HYG",
     "site_logo": "Iconos\icono H_G.png",
+    "show_ui_builder": False,
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.Group": "fas fa-users",
@@ -72,8 +73,8 @@ JAZZMIN_SETTINGS = {
         'products.PRODUCTS': 'fas fa-box',
         'sales.CLIENTES': 'fas fa-users',
     }
-}
 
+}
 
 
 JAZZMIN_UI_TWEAKS = {
@@ -82,7 +83,7 @@ JAZZMIN_UI_TWEAKS = {
     "body_small_text": False,
     "brand_small_text": True,
     "brand_colour": "navbar-info",
-    "accent": "accent-primary",
+    "accent": "accent-info",
     "navbar": "navbar-info navbar-dark",
     "no_navbar_border": False,
     "navbar_fixed": False,
@@ -95,20 +96,19 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_child_indent": False,
     "sidebar_nav_compact_style": False,
     "sidebar_nav_legacy_style": False,
-    "sidebar_nav_flat_style": True,
-    "theme": "sandstone",
+    "sidebar_nav_flat_style": False,
+    "theme": "pulse",
     "dark_mode_theme": None,
     "button_classes": {
-        "primary": "btn-custom-primary",
-        "secondary": "btn-custom-secondary",
-        "info": "btn-custom-info",
-        "warning": "btn-custom-warning",
-        "danger": "btn-custom-danger",
-        "success": "btn-custom-success"
+        "primary": "btn-outline-primary",
+        "secondary": "btn-outline-secondary",
+        "info": "btn-info",
+        "warning": "btn-outline-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
     },
     "actions_sticky_top": False
 }
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

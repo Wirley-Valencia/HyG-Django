@@ -13,6 +13,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.core.mail import send_mail
+from django.db import transaction
 
 
 CustomUser = get_user_model()
@@ -49,19 +50,9 @@ class Product(models.Model):
         return self.title
 
     def clean(self):
-        # if self.expiration_date and self.expiration_date < timezone.now().date():
-        #     raise ValidationError(
-        #         'La fecha de expiración no puede ser anterior a la fecha actual.')
-
         if self.price < 100:
             raise ValidationError(
                 'El precio debe tener por lo menos 3 digitos.')
-
-        # if self.cantidad_disponible is not None and self.cantidad_disponible < 0:
-        #     raise ValidationError('La cantidad no puede ser negativa.')
-    # def save(self, *args, **kwargs):
-    #     self.slug = slugify(self.title)
-    #     super(Product, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Producto"
@@ -72,30 +63,31 @@ class Product(models.Model):
         CustomUser = get_user_model()
         usuarios = CustomUser.objects.filter(is_staff=1)
 
-        for usuario in usuarios:
-            if not created and instance.total_cantidad_disponible == 5:
-                subject = 'Producto a punto de agotarse'
-                template = 'email/email_quantity_warning.html'
-                context = {'product': instance}
+    #     for usuario in usuarios:
+    #         if not created and instance.total_cantidad_disponible == 5:
+    #             subject = 'Producto a punto de agotarse'
+    #             template = 'email/email_quiantity_warning.html'
+    #             context = {'product': instance}
 
-                html_message = render_to_string(template, context)
-                plain_message = strip_tags(html_message)
-                from_email = 'vanessavalencia1052@gmail.com'
-                to_email = usuario.email  # Obtener el correo electrónico del usuario
+    #             html_message = render_to_string(template, context)
+    #             plain_message = strip_tags(html_message)
+    #             from_email = 'vanessavalencia1052@gmail.com'
+    #             to_email = usuario.email  # Obtener el correo electrónico del usuario
 
-                # Enviar el correo electrónico al usuario
-                send_mail(subject, plain_message, from_email, [
-                          to_email], html_message=html_message)
+    #             # Enviar el correo electrónico al usuario
+    #             send_mail(subject, plain_message, from_email, [
+    #                       to_email], html_message=html_message)
 
 
 post_save.connect(Product.check_product_stock, sender=Product)
 
-# def restar_stock(self, cantidad):
-#     """
-#     Resta la cantidad especificada del stock del producto.
-#     """
-#     self.stock -= cantidad
-#     self.save()
+
+def restar_stock(self, cantidad):
+    """
+    Resta la cantidad especificada del stock del producto.
+    """
+    self.stock -= cantidad
+    self.save()
 
 
 def set_slug(sender, instance, *args, **kwargs):  # callback
@@ -134,6 +126,35 @@ class Stock(models.Model):
 
     def __str__(self):
         return f"{self.product.title} - {self.expiration_date}"
+
+
+@receiver(post_save, sender=Product)
+def update_product_status(sender, instance, **kwargs):
+    if instance.total_cantidad_disponible == 0:
+        Product.objects.filter(pk=instance.pk).update(
+            status=Product.OUT_OF_STOCK)
+    else:
+        Product.objects.filter(pk=instance.pk).update(status=Product.AVAILABLE)
+
+
+@receiver(post_save, sender=Stock)
+def update_stock_status(sender, instance, **kwargs):
+    if instance.cantidad_disponible == 0 or instance.expiration_date <= timezone.now().date():
+        Stock.objects.filter(pk=instance.pk).update(status=Stock.INACTIVE)
+    else:
+        Stock.objects.filter(pk=instance.pk).update(status=Stock.AVAILABLE)
+
+
+# @receiver(post_save, sender=Stock)
+# def update_total_quantity(sender, instance, **kwargs):
+#     product = instance.product
+#     if product.pk is not None:  # Verificar si el producto tiene un pk asignado
+#         total_quantity = Stock.objects.filter(product=product).aggregate(
+#             total_quantity=models.Sum('cantidad_disponible'))['total_quantity']
+#         if total_quantity is None:
+#             total_quantity = 0
+#         product.total_cantidad_total = total_quantity
+#         product.save()
 
 
 @receiver(post_save, sender=Stock)

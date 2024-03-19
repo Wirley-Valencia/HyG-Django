@@ -3,32 +3,43 @@
     <input type="hidden" name="product_id" value="{{ product.id }}">
     <div class="row mb-4">
         <button type="button" class="btn btn-info d-inline" id="remove">-</button>
-        <input type="number" value="1" class="form-control col-sm-1 d-inline" id="quantity" name="quantity">
+        <input type="number" value="1" class="form-control col-sm-1 d-inline" id="quantity" name="quantity" min="1">
         <button type="button" class="btn btn-info" id="add">+</button>
     </div>
-    <div class="mt-2">
-        <button type="submit" class="btn btn-warning">Agregar al carrito</button>
-    </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+        <div class="mt-2">
+            <button type="submit" class="btn btn-warning">Agregar al carrito</button>
+        </div>
 </form>
 
 <script>
     const add = document.getElementById('add');
     const remove = document.getElementById('remove');
     const quantity = document.getElementById('quantity');
+    const errorMessage = document.getElementById('error-message');
 
     add.addEventListener('click', function () {
-        quantity.value = parseInt(quantity.value) + 1;
+        if (parseInt(quantity.value) < {{ product.total_cantidad_disponible }}) {
+            quantity.value = parseInt(quantity.value) + 1;
+        } else {
+            errorMessage.innerText = 'No hay suficientes productos disponibles.';
+        }
     });
 
     remove.addEventListener('click', function () {
-        // Verificar que la cantidad no sea menor o igual a 0 antes de restar
-        if (parseInt(quantity.value) > 0) {
+        if (parseInt(quantity.value) > 1) {
             quantity.value = parseInt(quantity.value) - 1;
+            errorMessage.innerText = '';
         } else {
-            // Si la cantidad es 0, no permitir restar más
-            alert("La cantidad no puede ser negativa");
+            alert("La cantidad no puede ser menor que 1");
         }
     });
-</script>  
 </script>
+
 

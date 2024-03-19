@@ -97,7 +97,7 @@ admin.site.register(Product, ProductAdmin)
     
 
 class StockAdmin(ImportExportModelAdmin):
-    list_display = ('id', 'product', 'expiration_date', 'cantidad_disponible', 'codigo')
+    list_display = ('id', 'product', 'expiration_date', 'cantidad_disponible', 'codigo', 'status',)
     list_editable = ('expiration_date', 'cantidad_disponible')
     search_fields = ('product__title',)
     list_per_page = 9

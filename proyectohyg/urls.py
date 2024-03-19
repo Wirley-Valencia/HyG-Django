@@ -50,8 +50,12 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
         template_name='contraseñaC.html'), name='password_reset_complete'),
     path('perfil/', views.perfil_usuario, name='perfil_usuario'),
+    path('editar-informacion/', views.editar_informacion, name='editar_informacion'),
+    path('guardar-informacion/', views.guardar_informacion, name='guardar_informacion'),
+    
 
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

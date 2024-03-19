@@ -1,0 +1,59 @@
+{%extends './layouts/plantillaindex.html'%}
+{% load static %}
+
+
+
+{% block title %}Perfil{% endblock %}
+
+{% block content %}
+
+<main class="container-fluid vh-100 d-flex align-items-center justify-content-center" id="mainperfil">
+    <div class="card">
+        <div class="card-body">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Editar Información del Usuario</h3>
+                    <hr>
+                    <form action="{% url 'guardar_informacion' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="username">Usuario:</label>
+                                    <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="first_name">Nombre:</label>
+                                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="last_name">Apellido:</label>
+                                    <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Dirección:</label>
+                                    <input type="text" class="form-control" id="address" name="address" value="{{ user.address }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cell_phone">Celular:</label>
+                                    <input type="text" class="form-control" id="cell_phone" name="cell_phone" value="{{ user.cell_phone }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> 
+</main>
+
+{% endblock %}

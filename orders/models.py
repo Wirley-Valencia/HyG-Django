@@ -1,11 +1,30 @@
 from django.db import models
 from user.models import CustomUser
 from carts.models import Cart
-from django.db.models.signals import pre_save
 import uuid
 from .common import OroderStatus, choices
-
+from enum import Enum
+from django.db.models.signals import pre_save, post_save
+import uuid
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.dispatch import receiver
+from email.mime.multipart import MIMEMultipart
+from django.contrib.auth import get_user_model
 # Create your models here.
+
+
+CustomUser = get_user_model()
+
+
+def obtener_email_usuario(user_id):
+    try:
+        usuario = CustomUser.objects.get(id=user_id)
+        correo = usuario.email
+        return correo
+    except CustomUser.DoesNotExist:
+        return None
 
 
 class Order(models.Model):
@@ -67,3 +86,23 @@ def set_total(sender, instance, *args, **kwargs):
 
 pre_save.connect(set_order_id, sender=Order)
 pre_save.connect(set_total, sender=Order)
+
+
+@receiver(post_save, sender=Order)
+def send_email_user(sender, instance, created, **kwargs):
+    if created:
+        subject = 'Nuevo pedido realizado'
+        template = 'email/email_order_user.html'
+
+        nombre_cliente = instance.user.username
+        codigo_orden = instance.order_id
+
+        context = {'nombre_cliente': nombre_cliente,
+                   'codigo_orden': codigo_orden}
+
+        html_message = render_to_string(template, context)
+        plain_message = strip_tags(html_message)
+        from_email = 'vanessavalencia1052@gmail.com'
+        to_email = instance.user.email
+        send_mail(subject, plain_message, from_email, [
+                  to_email], html_message=html_message)
