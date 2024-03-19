@@ -11,4 +11,7 @@ python manage.py collectstatic --no-input
 # Apply any outstanding database migrations
 python manage.py migrate
 
-# python manage.py createsuperuser --no-input --username admin --email admin@example.com --password contraseña
+# Crear un superusuario automáticamente
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); \
+      User.objects.create_superuser('adminHyG', 'hygvalencia10@gmail.com', 'hygdb1052')" \
+      | python manage.py shell
