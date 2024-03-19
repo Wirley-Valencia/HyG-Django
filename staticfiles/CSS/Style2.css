@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text&family=Noto+Sans:ital,wght@1,600&family=Quicksand:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Golos+Text&family=Noto+Sans:ital,wght@1,600&family=Quicksand:wght@300;500;700&display=swap');
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Golos Text', sans-serif;
+    /* font-family: 'Noto Sans', sans-serif; */
+    /* font-family: 'Quicksand', sans-serif; */
+    color: black;
+    font-size: medium;
+}
+
+
+body{
+    background-color: #D3E1EB;
+    background-image: url(./Iconos/Captura\ de\ pantalla\ 2023-03-11\ 172841.jpg);
+    background-repeat: no-repeat;
+    background-position: 50px 50px;
+    background-size: 750px;
+    background-position: 150px 150px;
+}
+
+#header{
+    background-color: rgb(255, 255, 255) ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10%;
+}
+
+.logo {
+    cursor: pointer;
+}
+
+
+.imgLogo{
+    height: 100px;
+    width: auto;
+    transition: all 0.3s;
+}
+
+.imgLogo:hover{
+    transform:scale(1.2) ;
+}
+
+.nav-links{
+    list-style: none;
+}
+
+.nav-links li{
+    display: inline;
+    padding: 0 20px;
+}
+
+.menu-horizontal{
+
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+.menu-horizontal li a{
+    display: block;
+    padding: 15px 20px;
+    /* text-decoration: none; */
+    border-color: black;
+    box-sizing: 5px;
+
+}
+
+.li-vertical{
+    background-color: #ffffff;
+}
+
+.li-vertical:hover{
+    background-color: #bcbcbc;
+}
+
+.menu-vertical{
+    position: absolute;
+    display: none;
+    list-style: none;
+    width: 180px;
+    background-color: #ffffff;
+    
+}
+
+.menu-horizontal li:hover .menu-vertical{
+    display: block;
+}
+
+/* CONTACTO */
+.bodyS{
+    background-image: none;
+}
+
+.h1-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.h1-title h1{
+    padding-top: 20px;
+    font-size: 120px;
+    font-family: Vegur, 'PT Sans', Verdana, sans-serif;
+}
+
+main{
+    padding: 50px 100px;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: aqua; */
+    padding-bottom: 0px;
+}
+
+main div {
+    display: flex;
+    justify-content: space-between;
+}
+main div img{
+    height: 600px;
+}
+
+.parrafo{
+    margin-top: 70px;
+    font-size: 40px;
+    margin-right: 250px;
+} 
+
+footer{
+    height: 100px;
+    /* position: relative */
+    background-color: rgb(255, 255, 255);
+}
+
+.main-contactos{
+    padding: 5% 20%;    
+}
+
+p{
+    padding-top: 20px;
+    justify-content: center;
+    padding-left: 3px;
+    font-size: 20px;
+}
+
+/* .ul-number{
+    padding-left: 35px;
+    
+}  */
+
+li{
+    padding-top: 20px;
+    font-size: 20px;
+}
+
+.footerC{
+    height: 100px;
+    /* position: relative */
+    background-color: rgb(255, 255, 255);
+    margin-top: 50px;
+}
+
+#bodyS{
+    background-color: #D3E1EB;
+    background-image: url(./Iconos/Captura\ de\ pantalla\ 2023-03-11\ 172841.jpg);
+    background-repeat: no-repeat;
+    background-position: 50px 50px;
+    background-size: 750px;
+    background-position: 150px 150px;
+}
+
+.productos{
+    text-decoration: none;
+    color: black;
+}
+
+#link{
+    color: black;
+}

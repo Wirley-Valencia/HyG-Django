@@ -1,0 +1,62 @@
+#nombre{
+    margin-bottom: 20px;
+    margin-left: 0px;
+    width: 300px;
+    height: 40px;
+    border: 3px solid #004AAD;
+}
+
+#iva{
+    margin-bottom: 20px;
+    margin-left: 0px;
+    width: 150px;
+    height: 40px;
+    border: 3px solid #004AAD;
+}
+
+#grande{
+    margin-bottom: 20px;
+    margin-left: 0px;
+    width: 270px;
+    height: 40px;
+    border: 3px solid #004AAD;
+}
+
+#pequeño{
+    margin-bottom: 20px;
+    margin-left: 0px;
+    width: 150px;
+    height: 40px;
+    border: 3px solid #004AAD;
+}
+
+#botones-inventario{
+    height: 50px;
+    padding: 3px;
+}
+
+#Filtro{
+    /* margin-left: 5px; */
+    height: 40px;
+
+    /* margin-bottom: 20px; */
+}
+
+.contenedorP-1{
+    /* border: 2px solid #D3E1EB; */
+    margin-top: 0px;
+    margin-bottom: 30px;
+    width: 100%;
+    padding-right: 10%;
+}
+
+#espaciobuscar{
+    background-color: rgb(255, 255, 255);
+    width: 50%;
+    margin-right: 0px;
+}
+
+#botonBuscar{
+    width: 100px;
+    margin-left: 0px;
+}
