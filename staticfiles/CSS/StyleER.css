@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text&family=Noto+Sans:ital,wght@1,600&family=Quicksand:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Golos+Text&family=Noto+Sans:ital,wght@1,600&family=Quicksand:wght@300;500;700&display=swap');
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Golos Text', sans-serif;
+    /* font-family: 'Noto Sans', sans-serif; */
+    /* font-family: 'Quicksand', sans-serif; */
+    color: black;
+    font-size: medium;
+}
+#header{
+    background-color: rgb(255, 255, 255) ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10%;
+}
+.bodyE{
+    background-color: #d3e1eb;
+    background-image: url(./../Iconos/Fondo_error_500.png);
+    background-size: 100%;
+ 
+    
+  
+}
+.bodyC{
+    background-color: #d3e1eb;
+ 
+ 
+    
+  
+}
+
+.imgLogo{
+    height: 100px;
+    width: auto;
+    transition: all 0.3s;
+}
+.imgAdv{
+    height: 100px;
+    width: auto;
+    transition: all 0.3s;
+}
+
+.imgLogo:hover{
+    transform:scale(1.2) ;
+}
+.imgAdv:hover{
+    transform:scale(1.2) ;
+}
+
+
+.img500{
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 3%;
+
+}
+.img404{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3%;
+    }
+
+
+.linea1{
+    text-align: center;
+    font-family: "Homer Simpson UI";
+    font-size: 300%;
+    color: #1696D3;
+   
+}
+.linea2{
+    text-align: center;
+    font-family: "Homer Simpson UI";
+    font-size: 350%;
+    color: black;
+   
+}
+.linea3{
+    text-align: center;
+    font-family: "Homer Simpson UI";
+    font-size: 320%;
+    color: black;
+    margin-top: 2%;
+}
+.linea4{
+    text-align: center;
+    font-family: "Homer Simpson UI";
+    font-size: 295%;
+    color: #1696D3;
+    margin-top: 2%;
+   
+}
+.imgAd{
+    height: 80px;
+    width: auto;
+    transition: all 0.3s;
+}
+
+.imgAd:hover{
+    transform:scale(1.2) ;
+}
+.comprar{
+    /* background-color: aqua; */
+    position: relative;
+    bottom: 70px;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 100px;
+    cursor: pointer;
+    margin-top: 10%;
+}
+.comprar button{
+    font-size: 20px;
+    background-color: rgb(255, 255, 255);
+    height: 50px;
+    width: 250px;
+    border-radius: 8px;
+    border-color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+footer{
+    height: 100px;
+    /* position: relative */
+    background-color: rgb(255, 255, 255);
+    margin-top: 3%;
+}
+
+.footerC{
+    height: 100px;
+    /* position: relative */
+    background-color: rgb(255, 255, 255);
+    margin-top: 1%;
+}
+
+
+
